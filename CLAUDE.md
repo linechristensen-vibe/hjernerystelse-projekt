@@ -78,7 +78,8 @@ Her skriver du de beslutninger, der er truffet undervejs, nyeste nederst.
 Kort, én til to linjer per beslutning.
 
 * Ren statisk webapp uden framework, byggetrin, backend og brugerdata.
-* Appen skal kunne deles med studiegruppen via en URL, så de ikke skal have filer tilsendt. Hvordan, er ikke besluttet endnu.
+* Appen ligger på GitHub Pages: https://linechristensen-vibe.github.io/hjernerystelse-projekt/ (repo: github.com/linechristensen-vibe/hjernerystelse-projekt, gren master). Efter hvert godkendt commit køres `git push`, så er URL'en opdateret efter cirka et minut.
+* GitHub CLI (gh) er installeret og logget ind som linechristensen-vibe. Handlinger, der lægger noget offentligt, kan blive blokeret af sikkerhedstjekket. Så giv Line kommandoen til at køre selv, med PATH sat først: `$env:Path = "C:\Program Files\Git\cmd;C:\Program Files\GitHub CLI;" + $env:Path; ...`
 
 ## Åbne punkter
 
@@ -87,4 +88,3 @@ relevante. Slet et punkt herfra, når det er afgjort, og skriv beslutningen oven
 
 * Hvad appen skal kunne.
 * Om brugerfladen skal være på dansk eller engelsk.
-* Hvor appen skal ligge, så studiegruppen kan tilgå den.
