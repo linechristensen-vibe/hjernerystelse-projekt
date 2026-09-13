@@ -3,12 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hjernerystelse Projekt</title>
+  <title>Hjernerystelse</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hjernerystelse Projekt</h1>
-  <p id="status">JavaScript er ikke indlæst.</p>
+
+  <header class="topbar">
+    <span class="topbar-title">Hjernerystelse</span>
+    <button class="profil-knap" id="profil-knap" aria-label="Profil">
+      <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- I DAG -->
+    <section class="side" id="side-idag">
+      <p class="dag-taeller">Dag ? efter din hjernerystelse</p>
+      <p class="hjaelp">Udfyld din profil, så appen kan tælle dagene for dig.</p>
+
+      <button class="knap knap-stor">Udfyld dagens log</button>
+
+      <div class="kort">
+        <h2>Dagens råd</h2>
+        <p>Her kommer et kort råd, der passer til, hvor du er i dit forløb.</p>
+      </div>
+
+      <button class="knap knap-advarsel">Hvornår skal jeg søge læge?</button>
+
+      <p class="ansvar">Appen erstatter ikke din læge. Er du i tvivl, så ring til lægen eller 1813.</p>
+    </section>
+
+    <!-- LOG -->
+    <section class="side" id="side-log" hidden>
+      <h1>Log</h1>
+      <p class="hjaelp">Her kommer din daglige symptomlog.</p>
+    </section>
+
+    <!-- VIDEN -->
+    <section class="side" id="side-viden" hidden>
+      <h1>Viden</h1>
+      <p class="hjaelp">Her kommer chatfeltet og emnerne.</p>
+
+      <div class="kort">
+        <h2>Hvem kan hjælpe</h2>
+        <p>Her kommer en kort oversigt over, hvem du kan kontakte.</p>
+      </div>
+
+      <div class="kort">
+        <h2>Kilder</h2>
+        <p>Appens indhold bygger på disse kilder.</p>
+        <ul class="kildeliste">
+          <li><a href="https://dcfh.dk/vaerktoejer-til-behandling-af-hjernerystelse/national-klinisk-retningslinje/" target="_blank" rel="noopener">National klinisk retningslinje for hjernerystelse (2021), via Dansk Center for Hjernerystelse</a></li>
+          <li><a href="https://dcfh.dk/information-om-hjernerystelse-til-patienter-og-paaroerende/spoergsmaal-om-hjernerystelse/" target="_blank" rel="noopener">Spørgsmål om hjernerystelse, Dansk Center for Hjernerystelse</a></li>
+          <li><a href="https://www.sundhed.dk/borger/patienthaandbogen/akutte-sygdomme/sygdomme/hovedskader/hjernerystelse-hvad-er-det/" target="_blank" rel="noopener">Hjernerystelse, hvad er det? Patienthåndbogen på sundhed.dk</a></li>
+          <li><a href="https://commotio.dk/rivermead-post-concussion-symptoms-questionnaire/" target="_blank" rel="noopener">Rivermead Post-Concussion Symptoms Questionnaire (RPQ), Commotio Danmark</a></li>
+          <li><a href="https://www.sralab.org/rehabilitation-measures/rivermead-post-concussion-symptom-questionnaire" target="_blank" rel="noopener">RPQ, RehabMeasures Database (engelsk)</a></li>
+          <li><a href="https://hjernerystelsesforeningen.dk/behandlingstilbud/" target="_blank" rel="noopener">Behandlingstilbud, Hjernerystelsesforeningen</a></li>
+          <li><a href="https://hjernerystelsesforeningen.dk/symptomliste/" target="_blank" rel="noopener">Symptomliste, Hjernerystelsesforeningen</a></li>
+          <li><a href="https://www.fysio.dk/nyheder/nyheder-2021/to-kliniske-retningslinjer-om-hjernerystelse" target="_blank" rel="noopener">To kliniske retningslinjer om hjernerystelse, Danske Fysioterapeuter</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TRÆNING -->
+    <section class="side" id="side-traening" hidden>
+      <h1>Træning</h1>
+      <p class="hjaelp">Øvelserne bygger på den nationale kliniske retningslinje.</p>
+
+      <div class="kort kort-pladsholder">
+        <h2>Gradueret fysisk aktivitet</h2>
+        <p>Kommer senere</p>
+      </div>
+      <div class="kort kort-pladsholder">
+        <h2>Balance og svimmelhed</h2>
+        <p>Kommer senere</p>
+      </div>
+      <div class="kort kort-pladsholder">
+        <h2>Øjne og samsyn</h2>
+        <p>Kommer senere</p>
+      </div>
+      <div class="kort kort-pladsholder">
+        <h2>Hukommelse og koncentration</h2>
+        <p>Kommer senere</p>
+      </div>
+      <div class="kort kort-pladsholder">
+        <h2>Ro og åndedræt</h2>
+        <p>Kommer senere</p>
+      </div>
+    </section>
+
+    <!-- PROFIL -->
+    <section class="side" id="side-profil" hidden>
+      <h1>Profil</h1>
+      <p class="hjaelp">Her kommer dine oplysninger: navn, alder, dato for hjernerystelsen og om du har været til lægen.</p>
+    </section>
+
+  </main>
+
+  <nav class="faner">
+    <button class="fane aktiv" data-side="idag">I dag</button>
+    <button class="fane" data-side="log">Log</button>
+    <button class="fane" data-side="viden">Viden</button>
+    <button class="fane" data-side="traening">Træning</button>
+  </nav>
+
   <script src="script.js"></script>
 </body>
 </html>

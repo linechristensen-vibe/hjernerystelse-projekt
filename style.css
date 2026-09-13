@@ -1,15 +1,193 @@
-body {
-  font-family: system-ui, sans-serif;
-  max-width: 40rem;
-  margin: 3rem auto;
-  padding: 0 1rem;
-  color: #222;
-  background: #fafafa;
+/* Farver og størrelser samlet ét sted, så de er nemme at ændre */
+:root {
+  --baggrund: #f3f0ea;      /* dæmpet, aldrig rent hvid */
+  --flade: #faf8f4;         /* kort og bjælker */
+  --tekst: #2b2b2b;
+  --tekst-svag: #5f5f5f;
+  --kant: #d9d4cb;
+  --primaer: #3d6b5e;       /* rolig grøn til hovedknapper */
+  --primaer-tekst: #ffffff;
+  --advarsel: #b0533a;      /* dæmpet rød til "søg læge" */
+  --skrift: 18px;
 }
 
-#status {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: var(--skrift);
+  line-height: 1.5;
+  color: var(--tekst);
+  background: var(--baggrund);
+  /* plads til topbjælke og fanebjælke */
+  padding-top: 3.5rem;
+  padding-bottom: 4.5rem;
+}
+
+/* Telefonbredde, også når appen åbnes på en computer */
+main {
+  max-width: 480px;
+  margin: 0 auto;
   padding: 1rem;
-  border-radius: 0.5rem;
-  background: #e8f5e9;
-  border: 1px solid #a5d6a7;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 0.5rem 0 0.5rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.4rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--primaer);
+}
+
+/* Topbjælke */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background: var(--flade);
+  border-bottom: 1px solid var(--kant);
+}
+
+.topbar-title {
+  font-weight: 600;
+}
+
+.profil-knap {
+  background: none;
+  border: none;
+  color: var(--tekst);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Sider */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.side[hidden] {
+  display: none;
+}
+
+.hjaelp {
+  color: var(--tekst-svag);
+}
+
+.dag-taeller {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+}
+
+.ansvar {
+  font-size: 0.9rem;
+  color: var(--tekst-svag);
+  margin-top: 1rem;
+}
+
+/* Kort */
+.kort {
+  background: var(--flade);
+  border: 1px solid var(--kant);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.kort p:last-child {
+  margin-bottom: 0;
+}
+
+.kort-pladsholder {
+  border-style: dashed;
+  color: var(--tekst-svag);
+}
+
+.kildeliste {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.kildeliste li {
+  margin-bottom: 0.6rem;
+}
+
+/* Knapper */
+.knap {
+  display: block;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 12px;
+  background: var(--primaer);
+  color: var(--primaer-tekst);
+  cursor: pointer;
+}
+
+.knap-stor {
+  min-height: 4rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.knap-advarsel {
+  background: var(--flade);
+  color: var(--advarsel);
+  border: 2px solid var(--advarsel);
+}
+
+/* Fanebjælke i bunden */
+.faner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4.5rem;
+  display: flex;
+  background: var(--flade);
+  border-top: 1px solid var(--kant);
+}
+
+.fane {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--tekst-svag);
+  cursor: pointer;
+  border-top: 3px solid transparent;
+}
+
+.fane.aktiv {
+  color: var(--primaer);
+  font-weight: 600;
+  border-top-color: var(--primaer);
 }

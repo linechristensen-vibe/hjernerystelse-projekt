@@ -32,8 +32,45 @@ med mange iterationer.
 Line er den eneste, der ændrer i koden. De tre andre i studiegruppen er brugere og
 giver feedback, de rører ikke filerne.
 
-Appens indhold er endnu ikke fastlagt. Det bliver besluttet i en senere session og
-skrevet ind her.
+### Hvad appen er
+
+En dansk app til voksne (over 18) med hjernerystelse. Der mangler strukturerede forløb
+i Danmark, og folk googler sig til svar. Appen samler evidensbaseret viden, en nem
+symptomlog og træning ét sted. Det adskiller den fra DCFH's app "Hjernerystelse – din
+guide" (79 kr, kun viden og værktøjer). Ankerkilde: den nationale kliniske retningslinje
+for hjernerystelse (2021).
+
+**Fire faner i bunden:** I dag, Log, Viden, Træning. Profil bag et ikon øverst til højre.
+
+* **I dag** (forsiden): "Dag X efter din hjernerystelse" (regnet fra profilens dato),
+  én stor knap "Udfyld dagens log", et kort råd der passer til fasen (første 48 timer,
+  første måned, derefter), og en altid synlig knap "Hvornår skal jeg søge læge?".
+* **Log** (symptomlog): bygger på RPQ (Rivermead, 16 symptomer, skala 0 til 4 med faste
+  knapper: slet ikke, lidt, moderat, meget, rigtig meget). Ingen sliders, ingen fritekst.
+  Parametre: hovedpine, svimmelhed, kvalme, træthed/energi, søvn, nakkesmerter,
+  koncentration, lysfølsomhed, støjfølsomhed, fysisk aktivitet. Én daglig udfyldning,
+  mulighed for flere. Medicin kun hjernerystelsesrelateret (Panodil, Ipren osv. med
+  antal) plus én knap "vanlig medicin taget". Data gemmes i browseren (localStorage).
+  Senere: knap "Udfyld med eksempeldata" til eksamen.
+* **Viden** ("coachen"): Ingen AI. Chatfelt hvor appen matcher nøgleord og synonymer
+  mod gruppens egne danske artikler og viser artiklen som svar. Intet match giver et
+  ærligt "det har jeg ikke noget om" plus emneknapper. Den gætter aldrig. Emneknapper
+  med korte miniartikler på let dansk. Sektion "Hvem kan hjælpe" (egen læge,
+  hjerneskadekoordinator i kommunen, Hjernerystelsesforeningen, DCFH). Kildeliste med
+  links nederst. Artiklerne skrives af gruppen ud fra internationale kilder, ingen
+  oversættelse i appen. Artiklerne er ikke skrevet endnu, første udgave har pladsholdere.
+* **Træning:** fem pladsholdere navngivet efter retningslinjen: Gradueret fysisk
+  aktivitet, Balance og svimmelhed, Øjne og samsyn, Hukommelse og koncentration, Ro og
+  åndedræt. Senere bygges ét spil rigtigt, de fire andre forbliver pladsholdere. Byg
+  ingen spil, før Line beder om det.
+* **Profil:** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej) og dato.
+  Gemmes i browseren. Mørk tilstand som valg her.
+
+**Udseende:** dæmpet lys baggrund (aldrig rent hvid), stor skrift, ingen animationer,
+få elementer per skærm, én tydelig handling ad gangen. Kort ansvarsfraskrivelse
+("erstatter ikke lægen") på forsiden.
+
+**Rækkefølge for bygning:** 1. Skal, 2. Profil, 3. Log, 4. Viden, 5. Træning.
 
 ## Sådan arbejder Line
 
@@ -82,10 +119,13 @@ Kort, én til to linjer per beslutning.
 * Appen ligger på GitHub Pages: https://linechristensen-vibe.github.io/hjernerystelse-projekt/ (repo: github.com/linechristensen-vibe/hjernerystelse-projekt, gren master). Efter hvert godkendt commit køres `git push`, så er URL'en opdateret efter cirka et minut.
 * GitHub CLI (gh) er installeret og logget ind som linechristensen-vibe. Handlinger, der lægger noget offentligt, kan blive blokeret af sikkerhedstjekket. Så giv Line kommandoen til at køre selv, med PATH sat først: `$env:Path = "C:\Program Files\Git\cmd;C:\Program Files\GitHub CLI;" + $env:Path; ...`
 
+* Appen er på dansk. Målgruppe: voksne over 18 med hjernerystelse.
+* Appen designes udelukkende til telefon. Slutbrugeren bruger aldrig computer. Line tester fra computer, så den skal bare ikke gå i stykker på en bred skærm.
+* "Coachen" er ikke en AI-chat (umuligt uden backend og API-nøgle). Den er en nøgleordssøgning i gruppens egne danske artikler, pakket ind som chat, plus emneknapper og kildefane.
+
 ## Åbne punkter
 
 Punkter, der skal afklares med Line, og som du skal huske at tage op, når de bliver
 relevante. Slet et punkt herfra, når det er afgjort, og skriv beslutningen ovenfor.
 
-* Hvad appen skal kunne.
-* Om brugerfladen skal være på dansk eller engelsk.
+* Hvilket ét af de fem træningsspil der bygges rigtigt (kræver research først).
