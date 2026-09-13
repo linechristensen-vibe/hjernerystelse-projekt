@@ -308,6 +308,7 @@ logFaerdig.addEventListener("click", function () {
   visLogDel("kvittering");
   opdaterLogOversigt();
   opdaterForside();
+  opdaterTraeningOversigt();
 });
 
 document.getElementById("log-luk").addEventListener("click", function () {
@@ -834,17 +835,132 @@ function afslutPrik() {
   opdaterTraeningOversigt();
 }
 
+// ---------- Træningslog, ugemål og udvikling ----------
+// Ingen streaks. Ugen tæller mandag til søndag, og starter forfra hver mandag.
+// En dag med høje symptomer og ingen træning tæller som en planlagt pause.
+var UGEMAAL_NOEGLE = "hovedro-ugemaal";
+var PAUSE_GRAENSE = 24;   // symptomniveau (af 48), hvor appen anbefaler en pause
+
+function hentUgemaal() {
+  return Number(localStorage.getItem(UGEMAAL_NOEGLE)) || 4;
+}
+
+// Dagene i denne uge, mandag først
+function denneUge() {
+  var idag = new Date();
+  idag.setHours(0, 0, 0, 0);
+  var mandag = new Date(idag);
+  mandag.setDate(idag.getDate() - ((idag.getDay() + 6) % 7));
+  var traeninger = hentTraening();
+  var dage = [];
+  for (var i = 0; i < 7; i++) {
+    var dato = new Date(mandag);
+    dato.setDate(mandag.getDate() + i);
+    var noegle = datoNoegle(dato);
+    var harTraenet = traeninger.some(function (t) { return t.dato === noegle; });
+    var log = senesteForDato(noegle);
+    var erPause = !harTraenet && log && symptomNiveau(log) >= PAUSE_GRAENSE;
+    dage.push({
+      dato: dato,
+      traenet: harTraenet,
+      pause: erPause,
+      erIdag: dato.getTime() === idag.getTime(),
+      fremtid: dato > idag
+    });
+  }
+  return dage;
+}
+
 function opdaterTraeningOversigt() {
-  var liste = hentTraening();
-  var kort = document.getElementById("traening-seneste");
+  var dage = denneUge();
+  var maal = hentUgemaal();
+  var flueben = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var pauseTegn = '<svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
+
+  document.getElementById("traening-uge").innerHTML = dage.map(function (d) {
+    return '<div class="uge-dag' + (d.traenet ? ' udfyldt' : '') + (d.pause ? ' pause' : '') + (d.erIdag ? ' idag' : '') + '">' +
+      '<span>' + UGEDAGE[d.dato.getDay()] + '</span>' +
+      '<div class="uge-cirkel">' + (d.traenet ? flueben : d.pause ? pauseTegn : '') + '</div>' +
+      '</div>';
+  }).join("");
+
+  var talt = dage.filter(function (d) { return d.traenet || d.pause; }).length;
+  var status = document.getElementById("traening-ugestatus");
+  if (talt >= maal) {
+    status.textContent = "Ugemålet er nået. Flot.";
+  } else {
+    status.textContent = talt + " af " + maal + " denne uge";
+  }
+
+  // ugemål-knapperne
+  document.querySelectorAll("#ugemaal-valg .valg-knap").forEach(function (knap) {
+    knap.classList.toggle("valgt", Number(knap.dataset.maal) === maal);
+  });
+
+  // pause-kortet: kun hvis dagens log er høj, og man ikke allerede har trænet i dag
+  var idag = dage.find(function (d) { return d.erIdag; });
+  document.getElementById("traening-pause").hidden = !(idag && idag.pause);
+
+  visUdvikling();
+}
+
+document.getElementById("ugemaal-valg").addEventListener("click", function (hændelse) {
+  var knap = hændelse.target.closest(".valg-knap");
+  if (!knap) return;
+  localStorage.setItem(UGEMAAL_NOEGLE, knap.dataset.maal);
+  opdaterTraeningOversigt();
+});
+
+// Personlige rekorder og en lille kurve over reaktionstiden. Kun mod sig selv.
+function visUdvikling() {
+  var liste = hentTraening().filter(function (t) { return t.spil === "prik"; });
+  var kort = document.getElementById("traening-udvikling");
   kort.hidden = liste.length === 0;
   if (!liste.length) return;
-  var s = liste[liste.length - 1];
-  var dato = new Date(s.tidspunkt);
-  document.getElementById("traening-seneste-tekst").textContent =
-    "Følg prikken, " + dato.getDate() + "/" + (dato.getMonth() + 1) + ": " +
-    s.traeffere + " af " + s.antal + " farveskift" +
-    (s.reaktion === null ? "" : ", " + (s.reaktion / 1000).toFixed(1).replace(".", ",") + " s reaktionstid") + ".";
+
+  var medReaktion = liste.filter(function (t) { return t.reaktion !== null; });
+  var bedsteReaktion = medReaktion.length ? Math.min.apply(null, medReaktion.map(function (t) { return t.reaktion; })) : null;
+  var bedsteTraef = Math.max.apply(null, liste.map(function (t) { return t.antal ? t.traeffere / t.antal : 0; }));
+
+  document.getElementById("rekord-reaktion").textContent = bedsteReaktion === null ? "–" : (bedsteReaktion / 1000).toFixed(1).replace(".", ",") + " s";
+  document.getElementById("rekord-traefsikkerhed").textContent = Math.round(bedsteTraef * 100) + " %";
+  document.getElementById("rekord-antal").textContent = liste.length;
+
+  tegnTraeningGraf(medReaktion.slice(-10));
+}
+
+function tegnTraeningGraf(liste) {
+  var svg = document.getElementById("traening-graf");
+  var bredde = 320, hoejde = 120, top = 22, bund = 14;
+  if (liste.length < 2) {
+    svg.innerHTML = '<text x="160" y="60" text-anchor="middle" font-size="13">Kurven kommer efter to træninger.</text>';
+    return;
+  }
+  var maks = Math.max(1000, Math.max.apply(null, liste.map(function (t) { return t.reaktion; })));
+  var grafHoejde = hoejde - top - bund;
+  var kolonne = bredde / liste.length;
+  var punkter = liste.map(function (t, i) {
+    return { x: (i + 0.5) * kolonne, y: hoejde - bund - (t.reaktion / maks) * grafHoejde, v: t.reaktion };
+  });
+  var linje = "M" + punkter[0].x + " " + punkter[0].y;
+  for (var i = 1; i < punkter.length; i++) {
+    var a = punkter[i - 1], b = punkter[i], midt = (a.x + b.x) / 2;
+    linje += " C" + midt + " " + a.y + ", " + midt + " " + b.y + ", " + b.x + " " + b.y;
+  }
+  var flade = linje + " L" + punkter[punkter.length - 1].x + " " + (hoejde - bund) + " L" + punkter[0].x + " " + (hoejde - bund) + " Z";
+  var dele = [
+    '<line x1="0" y1="' + (hoejde - bund) + '" x2="' + bredde + '" y2="' + (hoejde - bund) + '" stroke="#cfd9e2" stroke-width="1"/>',
+    '<path d="' + flade + '" fill="#4a7565" opacity="0.12"/>',
+    '<path d="' + linje + '" fill="none" stroke="#4a7565" stroke-width="2.5" stroke-linecap="round"/>'
+  ];
+  punkter.forEach(function (p, i) {
+    var sidste = i === punkter.length - 1;
+    dele.push('<circle cx="' + p.x + '" cy="' + p.y + '" r="' + (sidste ? 6 : 4) + '" fill="#4a7565" stroke="#e0e8ef" stroke-width="2"><title>' + (p.v / 1000).toFixed(1) + ' s</title></circle>');
+    if (sidste) {
+      dele.push('<text x="' + p.x + '" y="' + (p.y - 12) + '" text-anchor="middle" font-size="14" font-weight="600">' + (p.v / 1000).toFixed(1).replace(".", ",") + ' s</text>');
+    }
+  });
+  svg.innerHTML = dele.join("");
 }
 
 document.getElementById("aabn-prik").addEventListener("click", aabnPrik);

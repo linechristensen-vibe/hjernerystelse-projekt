@@ -748,6 +748,56 @@ a {
   color: var(--primaer);
 }
 
+/* Træning: uge, ugemål og udvikling */
+.uge-status {
+  margin: -0.5rem 0 0;
+  text-align: center;
+  font-weight: 600;
+  color: var(--primaer);
+}
+
+.ugemaal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ugemaal > span {
+  font-weight: 600;
+}
+
+.ugemaal .valg {
+  flex: 1;
+  max-width: 14rem;
+}
+
+.ugemaal .valg-knap {
+  min-height: 2.75rem;
+}
+
+.uge-dag.pause .uge-cirkel {
+  background: var(--lavendel);
+  border-color: var(--lavendel);
+}
+
+.rekorder {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.rekord {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rekord .flise-tal {
+  font-size: 1.3rem;
+}
+
 /* Træning: Følg prikken */
 .demo-maerke {
   display: inline-block;

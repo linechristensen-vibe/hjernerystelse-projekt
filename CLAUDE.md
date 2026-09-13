@@ -81,10 +81,21 @@ for hjernerystelse (2021).
   demo, så Line kan se mulighederne): prikken bevæger sig i en blød bane i 30
   sekunder, bliver mørk 5 gange i 1,5 sekund, brugeren trykker på feltet. Resultat:
   træffere af mulige og gennemsnitlig reaktionstid. Gemmes i localStorage under
-  "hovedro-traening", seneste vises på Træning-fanen. Mærket "Demo, ikke gennemgået
-  mod kilderne". De fire andre kort er pladsholdere. Balance kan ikke måles i en
-  browser (kræver bevægelsessensor), kun instruktioner. Byg ikke flere spil, før
-  gruppen har researchet, hvilke der er evidens for.
+  "hovedro-traening". Mærket "Demo, ikke gennemgået mod kilderne". De fire andre kort
+  er pladsholdere. Balance kan ikke måles i en browser (kræver bevægelsessensor), kun
+  instruktioner. Byg ikke flere spil, før gruppen har researchet, hvilke der er
+  evidens for.
+* **Gamification (bygget, principper fra research):** belønner jævnhed og fornuft,
+  aldrig mængde. Ingen streaks, point, ranglister eller "du missede". Øverst på
+  Træning: ugestribe mandag til søndag (flueben = trænet, pausetegn = hviledag),
+  "3 af 4 denne uge" og ugemål brugeren selv vælger (2 til 5, gemt under
+  "hovedro-ugemaal", standard 4). En dag uden træning, hvor dagens symptomniveau er
+  24 eller over (af 48), tæller som planlagt pause og viser kortet "I dag: tag det
+  roligt". Kortet "Din udvikling": bedste reaktionstid, bedste træfsikkerhed, antal
+  træninger, og kurve over reaktionstiden de seneste 10 gange. Kun mod sig selv.
+  Næste skridt (ikke bygget): niveauer i Følg prikken, der låses op ved 80 % to gange,
+  få stille milepæle ("10 træninger", "første fulde uge"), og to linjer "hvad træner
+  det og hvorfor" under hver øvelse.
 * **Profil (bygget):** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej)
   og dato. Gemmes i localStorage under "hovedro-profil". Mørk tilstand kommer her
   senere, når resten af appen er på plads.

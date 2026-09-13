@@ -221,6 +221,26 @@
 
       <div class="side-del" id="traening-oversigt">
       <h1>Træning</h1>
+
+      <!-- Ugen: mandag til søndag, flueben på dage med træning, pause-tegn på hviledage -->
+      <div class="uge" id="traening-uge"></div>
+      <p class="uge-status" id="traening-ugestatus"></p>
+
+      <div class="ugemaal">
+        <span>Dit ugemål</span>
+        <div class="valg" id="ugemaal-valg">
+          <button type="button" class="valg-knap" data-maal="2">2</button>
+          <button type="button" class="valg-knap" data-maal="3">3</button>
+          <button type="button" class="valg-knap" data-maal="4">4</button>
+          <button type="button" class="valg-knap" data-maal="5">5</button>
+        </div>
+      </div>
+
+      <div class="kort kort-groen" id="traening-pause" hidden>
+        <h2>I dag: tag det roligt</h2>
+        <p>Dine symptomer er høje i dag. En pause er en del af planen og tæller med i din uge.</p>
+      </div>
+
       <p class="hjaelp">Øvelserne bygger på den nationale kliniske retningslinje.</p>
 
       <div class="traening-gitter">
@@ -251,9 +271,24 @@
         </div>
       </div>
 
-      <div class="kort" id="traening-seneste" hidden>
-        <h2>Seneste træning</h2>
-        <p id="traening-seneste-tekst"></p>
+      <div class="kort kort-blaa" id="traening-udvikling" hidden>
+        <h2>Din udvikling</h2>
+        <div class="rekorder">
+          <div class="rekord">
+            <span class="flise-tal" id="rekord-reaktion">–</span>
+            <span class="flise-tekst">Bedste reaktionstid</span>
+          </div>
+          <div class="rekord">
+            <span class="flise-tal" id="rekord-traefsikkerhed">–</span>
+            <span class="flise-tekst">Bedste træfsikkerhed</span>
+          </div>
+          <div class="rekord">
+            <span class="flise-tal" id="rekord-antal">–</span>
+            <span class="flise-tekst">Træninger i alt</span>
+          </div>
+        </div>
+        <p class="hjaelp" id="udvikling-tekst">Reaktionstid de seneste træninger. Lavere er bedre.</p>
+        <svg class="graf" id="traening-graf" viewBox="0 0 320 120" aria-label="Reaktionstid de seneste træninger"></svg>
       </div>
       </div>
 
