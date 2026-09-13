@@ -104,6 +104,12 @@ for hjernerystelse (2021).
 * Ret altid årsagen, aldrig symptomet. Ingen lappeløsninger ét sted, når fejlen sidder et andet.
 * Ved hver filændring: sig hvad der blev fjernet, ikke kun hvad der blev tilføjet.
 * Teksten fra Line er ofte dikteret, så der er stavefejl og forkerte ord. Læs meningen. Er du i tvivl om, hvad hun mener, så stop og spørg i stedet for at gætte.
+* Line følger med i appen i Claudes browserpanel. Start derfor en lokal testserver
+  tidligt i hver session og lad den køre hele sessionen (luk den ikke efter test):
+  en lille PowerShell HttpListener på port 8765, der serverer projektmappen med
+  rigtige content-types for html, css og js. Åbn http://localhost:8765/index.html i
+  panelet i telefonstørrelse (mobile). Åbn aldrig filen via file://, panelet viser den
+  uden CSS. Python findes ikke på maskinen.
 * Afklar før du bygger. Når Line beskriver en ny funktion, så stil spørgsmål (ét ad gangen), indtil du er sikker på, hvad den første udgave skal være. Opsummer den kort, få hendes godkendelse, og byg først derefter. Det sparer iterationer i koden.
 
 ## Tekniske rammer, som er låst
