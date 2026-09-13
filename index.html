@@ -24,9 +24,9 @@
     <section class="side" id="side-idag">
       <div class="hilsen">
         <div>
-          <p class="hilsen-lille">Godmorgen</p>
-          <h1 class="hilsen-stor">Hej</h1>
-          <p class="hjaelp">Udfyld din profil, så appen kan tælle dagene for dig.</p>
+          <p class="hilsen-lille" id="hilsen-tid">Godmorgen</p>
+          <h1 class="hilsen-stor" id="hilsen-navn">Hej</h1>
+          <p class="hjaelp" id="hilsen-dag">Udfyld din profil, så appen kan tælle dagene for dig.</p>
         </div>
         <!-- Enkel illustration: hjerne i en blød cirkel med et blad -->
         <svg class="hilsen-illustration" viewBox="0 0 120 120" aria-hidden="true">
@@ -120,7 +120,40 @@
     <!-- PROFIL -->
     <section class="side" id="side-profil" hidden>
       <h1>Profil</h1>
-      <p class="hjaelp">Her kommer dine oplysninger: navn, alder, dato for hjernerystelsen og om du har været til lægen.</p>
+      <p class="hjaelp">Dine oplysninger bliver kun på din egen telefon.</p>
+
+      <form id="profil-form" class="form">
+        <label class="felt">
+          <span>Hvad hedder du?</span>
+          <input type="text" name="navn" autocomplete="given-name" placeholder="Dit fornavn">
+        </label>
+
+        <label class="felt">
+          <span>Hvor gammel er du?</span>
+          <input type="number" name="alder" min="18" max="120" inputmode="numeric" placeholder="År">
+        </label>
+
+        <label class="felt">
+          <span>Hvornår fik du din hjernerystelse?</span>
+          <input type="date" name="skadedato">
+        </label>
+
+        <div class="felt">
+          <span>Har du været til lægen?</span>
+          <div class="valg" id="laege-valg">
+            <button type="button" class="valg-knap" data-vaerdi="ja">Ja</button>
+            <button type="button" class="valg-knap" data-vaerdi="nej">Nej</button>
+          </div>
+        </div>
+
+        <label class="felt" id="laegedato-felt" hidden>
+          <span>Hvornår var du til lægen?</span>
+          <input type="date" name="laegedato">
+        </label>
+
+        <button type="submit" class="knap knap-stor">Gem</button>
+        <p class="kvittering" id="profil-kvittering" hidden>Gemt.</p>
+      </form>
     </section>
 
   </main>
