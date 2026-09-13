@@ -481,7 +481,7 @@ var ARTIKLER = [
     titel: "Hvornår skal jeg søge læge?",
     ikon: "advarsel",
     farve: 2,
-    noegleord: ["læge", "lægen", "1813", "112", "akut", "farlig", "opkast", "kaste op", "forvirr", "kramp", "besvim", "bevidst", "værre", "forværr", "skadestue", "hospital"],
+    noegleord: ["læge", "lægen", "lægevagt", "1813", "112", "akut", "farlig", "opkast", "kaste op", "forvirr", "kramp", "besvim", "bevidst", "værre", "forværr", "skadestue", "hospital"],
     tekst: [
       "<p>Ring 112 eller tag på skadestuen med det samme, hvis du får et eller flere af disse tegn:</p>",
       "<ul><li>Hovedpine, der bliver værre og værre</li><li>Gentagne opkastninger</li><li>Du bliver forvirret, usædvanligt søvnig eller svær at vække</li><li>Kramper</li><li>Svaghed eller følelsesløshed i arme eller ben</li><li>Utydelig tale eller synsforstyrrelser, der kommer pludseligt</li></ul>",
