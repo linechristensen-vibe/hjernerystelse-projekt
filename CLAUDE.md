@@ -47,6 +47,7 @@ skrevet ind her.
 * Ret altid årsagen, aldrig symptomet. Ingen lappeløsninger ét sted, når fejlen sidder et andet.
 * Ved hver filændring: sig hvad der blev fjernet, ikke kun hvad der blev tilføjet.
 * Teksten fra Line er ofte dikteret, så der er stavefejl og forkerte ord. Læs meningen. Er du i tvivl om, hvad hun mener, så stop og spørg i stedet for at gætte.
+* Afklar før du bygger. Når Line beskriver en ny funktion, så stil spørgsmål (ét ad gangen), indtil du er sikker på, hvad den første udgave skal være. Opsummer den kort, få hendes godkendelse, og byg først derefter. Det sparer iterationer i koden.
 
 ## Tekniske rammer, som er låst
 
