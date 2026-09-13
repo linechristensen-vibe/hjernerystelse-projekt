@@ -70,6 +70,7 @@ Projektet skal være under git fra start, så enhver ændring kan rulles tilbage
 * Lav et commit efter hver afsluttet ændring, Line har godkendt.
 * Skriv commit-beskeder på dansk og i almindeligt sprog, så hun kan læse historikken og finde tilbage til en version, der virkede.
 * Hvis noget går i stykker, så tilbyd at rulle tilbage, før du forsøger at reparere videre oven på det ødelagte.
+* Git blev installeret 13. september 2026 med winget. Hvis `git` ikke findes i terminalen, så genindlæs PATH fra systemet først, i stedet for at konkludere at git mangler.
 
 ## Beslutninger
 
