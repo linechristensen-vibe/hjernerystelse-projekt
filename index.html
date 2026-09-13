@@ -42,12 +42,13 @@
       <button class="knap knap-stor" id="idag-log-knap">Udfyld dagens log</button>
       <p class="log-udfyldt" id="idag-log-status" hidden>Dagens log er udfyldt</p>
 
-      <div class="kort kort-groen">
-        <h2>Dagens råd</h2>
-        <p>Her kommer et kort råd, der passer til, hvor du er i dit forløb.</p>
-      </div>
+      <button type="button" class="kort kort-groen kort-knap" id="idag-raad">
+        <h2 id="idag-raad-titel">Dagens råd</h2>
+        <p id="idag-raad-tekst">Udfyld din profil, så rådet passer til, hvor du er i dit forløb.</p>
+        <span class="laes-mere">Læs mere →</span>
+      </button>
 
-      <button class="knap knap-advarsel">Hvornår skal jeg søge læge?</button>
+      <button type="button" class="knap knap-advarsel" id="idag-laege">Hvornår skal jeg søge læge?</button>
 
       <p class="ansvar">Appen erstatter ikke din læge. Er du i tvivl, så ring til lægen eller 1813.</p>
     </section>
@@ -157,16 +158,36 @@
 
     <!-- VIDEN -->
     <section class="side" id="side-viden" hidden>
-      <h1>Viden</h1>
-      <p class="hjaelp">Her kommer chatfeltet og emnerne.</p>
 
-      <div class="kort kort-lavendel">
-        <h2>Hvem kan hjælpe</h2>
-        <p>Her kommer en kort oversigt over, hvem du kan kontakte.</p>
-      </div>
+      <!-- Oversigt: chat, emner, hjælp og kilder -->
+      <div class="side-del" id="viden-oversigt">
+        <h1>Viden</h1>
+        <p class="hjaelp">Svarene bygger på appens kilder. Appen gætter ikke: finder den ikke noget, siger den det.</p>
 
-      <div class="kort">
-        <h2>Kilder</h2>
+        <div class="chat" id="chat-traad"></div>
+
+        <form class="chat-form" id="chat-form">
+          <input type="text" id="chat-felt" placeholder="Skriv dit spørgsmål" autocomplete="off">
+          <button type="submit" class="knap chat-knap">Spørg</button>
+        </form>
+
+        <h2>Emner</h2>
+        <div class="emner" id="emner"></div>
+
+        <div class="kort kort-lavendel">
+          <h2>Hvem kan hjælpe</h2>
+          <p class="udkast">Udkast. Gruppen skal tjekke, hvad der gælder i jeres region.</p>
+          <ul class="hjaelpeliste">
+            <li><strong>Din egen læge</strong> er altid første skridt. Lægen kan henvise videre, hvis symptomerne varer ved.</li>
+            <li><strong>Akut hjælp:</strong> ring 112 ved alvorlige tegn. Uden for lægens åbningstid: lægevagten i din region (i Region Hovedstaden 1813).</li>
+            <li><strong>Hjerneskadekoordinator i din kommune.</strong> De fleste kommuner har en. Det varierer, om de tager hjernerystelse ind, så spørg.</li>
+            <li><strong><a href="https://hjernerystelsesforeningen.dk/behandlingstilbud/" target="_blank" rel="noopener">Hjernerystelsesforeningen</a></strong> har en oversigt over tilbud i hver region.</li>
+            <li><strong><a href="https://dcfh.dk/" target="_blank" rel="noopener">Dansk Center for Hjernerystelse</a></strong> samler viden til patienter og pårørende.</li>
+          </ul>
+        </div>
+
+        <div class="kort">
+          <h2>Kilder</h2>
         <p>Appens indhold bygger på disse kilder.</p>
         <ul class="kildeliste">
           <li><a href="https://dcfh.dk/vaerktoejer-til-behandling-af-hjernerystelse/national-klinisk-retningslinje/" target="_blank" rel="noopener">National klinisk retningslinje for hjernerystelse (2021), via Dansk Center for Hjernerystelse</a></li>
@@ -178,7 +199,21 @@
           <li><a href="https://hjernerystelsesforeningen.dk/symptomliste/" target="_blank" rel="noopener">Symptomliste, Hjernerystelsesforeningen</a></li>
           <li><a href="https://www.fysio.dk/nyheder/nyheder-2021/to-kliniske-retningslinjer-om-hjernerystelse" target="_blank" rel="noopener">To kliniske retningslinjer om hjernerystelse, Danske Fysioterapeuter</a></li>
         </ul>
+        </div>
       </div>
+
+      <!-- Én artikel ad gangen -->
+      <div class="side-del" id="viden-artikel" hidden>
+        <button type="button" class="tilbage-link" id="artikel-tilbage">← Tilbage til Viden</button>
+        <div class="log-hoved">
+          <div class="log-ikon" id="artikel-ikon"></div>
+          <h1 id="artikel-titel"></h1>
+        </div>
+        <p class="udkast">Udkast. Gruppen skal gennemgå teksten mod kilderne.</p>
+        <div class="artikel-tekst" id="artikel-tekst"></div>
+        <p class="artikel-kilde" id="artikel-kilde"></p>
+      </div>
+
     </section>
 
     <!-- TRÆNING -->

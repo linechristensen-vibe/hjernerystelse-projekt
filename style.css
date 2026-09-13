@@ -533,6 +533,175 @@ a {
   border-bottom: none;
 }
 
+/* Viden: chat */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.besked {
+  max-width: 88%;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  line-height: 1.45;
+}
+
+.besked p {
+  margin: 0 0 0.5rem;
+}
+
+.besked p:last-child {
+  margin-bottom: 0;
+}
+
+.besked-app {
+  align-self: flex-start;
+  background: var(--flade);
+  border: 1px solid var(--kant);
+  border-bottom-left-radius: 4px;
+}
+
+.besked-bruger {
+  align-self: flex-end;
+  background: var(--groen);
+  border-bottom-right-radius: 4px;
+}
+
+.besked h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.besked-kilde {
+  font-size: 0.85rem;
+  color: var(--tekst-svag);
+}
+
+.chat-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 3.25rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 1.05rem;
+  font-family: inherit;
+  color: var(--tekst);
+  background: var(--flade);
+  border: 1px solid var(--kant);
+  border-radius: 12px;
+}
+
+.chat-form input:focus {
+  outline: 3px solid var(--primaer);
+  outline-offset: 1px;
+}
+
+.chat-form .chat-knap {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0 1.25rem;
+}
+
+/* Viden: emneknapper */
+.emner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.emne-knap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-height: 5.5rem;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: left;
+  color: var(--tekst);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.emne-knap svg {
+  width: 26px;
+  height: 26px;
+  color: var(--primaer);
+}
+
+/* Viden: artikel */
+.tilbage-link {
+  align-self: flex-start;
+  min-height: 48px;
+  padding: 0 0.25rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--primaer);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.udkast {
+  font-size: 0.85rem;
+  color: var(--tekst-svag);
+  padding: 0.5rem 0.75rem;
+  background: var(--fersken);
+  border-radius: 8px;
+}
+
+.artikel-tekst p {
+  margin-bottom: 1rem;
+}
+
+.artikel-tekst ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+}
+
+.artikel-tekst li {
+  margin-bottom: 0.4rem;
+}
+
+.artikel-kilde {
+  font-size: 0.9rem;
+  color: var(--tekst-svag);
+}
+
+.hjaelpeliste {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.hjaelpeliste li {
+  margin-bottom: 0.6rem;
+}
+
+/* Kort, der kan trykkes på (forsidens råd) */
+.kort-knap {
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--tekst);
+  cursor: pointer;
+}
+
+.laes-mere {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: var(--primaer);
+}
+
 /* Knapper */
 .knap {
   display: block;

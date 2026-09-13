@@ -77,6 +77,7 @@ profilForm.addEventListener("submit", function (hændelse) {
   });
   profilKvittering.hidden = false;
   opdaterForside();
+  opdaterRaad();
 });
 
 // ---------- Forsiden ----------
@@ -143,7 +144,8 @@ var IKONER = {
   syn:           '<svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z" ' + S + '/><circle cx="12" cy="12" r="3" ' + S + '/><path d="M4 4l16 16" ' + S + '/></svg>',
   soevn:         '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" ' + S + '/><path d="M17 3l.5 1.5L19 5l-1.5.5L17 7l-.5-1.5L15 5l1.5-.5z" fill="currentColor"/></svg>',
   aktivitet:     '<svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="2" ' + S + '/><path d="M8 21l3-7-2-3-4 3M11 14l3 2 2 5M9 11l3-3 3 2 3-1" ' + S + '/></svg>',
-  medicin:       '<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)" ' + S + '/><path d="M9.5 9.5l5 5" ' + S + '/></svg>'
+  medicin:       '<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)" ' + S + '/><path d="M9.5 9.5l5 5" ' + S + '/></svg>',
+  advarsel:      '<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z" ' + S + '/><path d="M12 10v5" ' + S + '/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg>'
 };
 var IKON_FARVER = ["#e3ede6", "#e8e3f0", "#f6e4dc", "#e0e8ef"];
 
@@ -470,6 +472,235 @@ document.getElementById("log-vis-svar").addEventListener("click", function () {
   this.textContent = liste.hidden ? "Se alle dagens svar" : "Skjul dagens svar";
 });
 
+// ---------- Viden ----------
+// Artiklerne er UDKAST. Gruppen skriver de endelige tekster ud fra kilderne.
+// Nøgleordene bruges af chatfeltet: står et af ordene i spørgsmålet, vises artiklen.
+var ARTIKLER = [
+  {
+    id: "laege",
+    titel: "Hvornår skal jeg søge læge?",
+    ikon: "advarsel",
+    farve: 2,
+    noegleord: ["læge", "lægen", "1813", "112", "akut", "farlig", "opkast", "kaste op", "forvirr", "kramp", "besvim", "bevidst", "værre", "forværr", "skadestue", "hospital"],
+    tekst: [
+      "<p>Ring 112 eller tag på skadestuen med det samme, hvis du får et eller flere af disse tegn:</p>",
+      "<ul><li>Hovedpine, der bliver værre og værre</li><li>Gentagne opkastninger</li><li>Du bliver forvirret, usædvanligt søvnig eller svær at vække</li><li>Kramper</li><li>Svaghed eller følelsesløshed i arme eller ben</li><li>Utydelig tale eller synsforstyrrelser, der kommer pludseligt</li></ul>",
+      "<p>Kontakt din egen læge, hvis symptomerne ikke er blevet bedre efter cirka to uger, eller hvis du er i tvivl. Lægen kan vurdere dig og henvise videre.</p>"
+    ],
+    kilde: { navn: "Patienthåndbogen, sundhed.dk", url: "https://www.sundhed.dk/borger/patienthaandbogen/akutte-sygdomme/sygdomme/hovedskader/hjernerystelse-hvad-er-det/" }
+  },
+  {
+    id: "foerste-dage",
+    titel: "De første dage",
+    ikon: "soevn",
+    farve: 0,
+    noegleord: ["første", "starten", "lige sket", "i går", "hvile", "hvil", "ro ", "ligge", "sengen", "48"],
+    tekst: [
+      "<p>De første et til to døgn handler om ro. Hvil dig, sov når du er træt, og undgå ting, der kræver meget af hovedet.</p>",
+      "<p>Fuldstændig mørke og total hvile i mange dage anbefales ikke længere. Efter de første døgn skal du langsomt begynde at gøre almindelige ting igen, i det tempo dine symptomer tillader.</p>",
+      "<p>Hold øje med faresignalerne under \"Hvornår skal jeg søge læge?\".</p>"
+    ],
+    kilde: { navn: "Dansk Center for Hjernerystelse", url: "https://dcfh.dk/information-om-hjernerystelse-til-patienter-og-paaroerende/spoergsmaal-om-hjernerystelse/" }
+  },
+  {
+    id: "skaerm",
+    titel: "Skærm og lys",
+    ikon: "lys",
+    farve: 3,
+    noegleord: ["skærm", "telefon", "mobil", "tv", "fjernsyn", "computer", "ipad", "tablet", "lys", "solbrille", "læse", "bog", "spil", "netflix"],
+    tekst: [
+      "<p>Du behøver ikke undgå skærme helt. Det vigtige er at bruge dem i korte perioder og holde pauser, før du bliver træt eller får hovedpine.</p>",
+      "<p>Skru ned for lysstyrken, brug større skrift, og slå notifikationer fra. Er du følsom over for lys, kan solbriller udendørs hjælpe.</p>",
+      "<p>Lange perioder uden kontakt til andre kan gøre humøret dårligere. Så brug gerne telefonen til at holde kontakt, bare i små bidder.</p>"
+    ],
+    kilde: { navn: "Dansk Center for Hjernerystelse", url: "https://dcfh.dk/information-om-hjernerystelse-til-patienter-og-paaroerende/spoergsmaal-om-hjernerystelse/" }
+  },
+  {
+    id: "soevn",
+    titel: "Søvn",
+    ikon: "soevn",
+    farve: 1,
+    noegleord: ["søvn", "sove", "sover", "nat", "vågn", "træt", "udmattet", "energi", "middagslur", "lur"],
+    tekst: [
+      "<p>God søvn er noget af det vigtigste for, at hjernen kan komme sig. Gå i seng og stå op på nogenlunde samme tid hver dag, også i weekenden.</p>",
+      "<p>Korte lure i dagtimerne er fint i starten, men hold dem korte (20 til 30 minutter), så du stadig kan sove om natten.</p>",
+      "<p>Undgå skærm den sidste time før sengetid, og hold soveværelset mørkt og køligt.</p>"
+    ],
+    kilde: { navn: "Dansk Center for Hjernerystelse", url: "https://dcfh.dk/information-om-hjernerystelse-til-patienter-og-paaroerende/spoergsmaal-om-hjernerystelse/" }
+  },
+  {
+    id: "smertestillende",
+    titel: "Smertestillende",
+    ikon: "medicin",
+    farve: 2,
+    noegleord: ["panodil", "paracetamol", "ipren", "ibuprofen", "smertestillende", "pille", "piller", "medicin", "tablet", "hovedpinepille", "treo", "kodimagnyl"],
+    tekst: [
+      "<p>Almindelig håndkøbsmedicin som Panodil (paracetamol) kan bruges mod hovedpine i de første dage. Følg doseringen på pakken.</p>",
+      "<p>Vær opmærksom på, at smertestillende taget mange dage i træk i sig selv kan give hovedpine. Bruger du det mere end nogle få dage om ugen, så tal med din læge.</p>",
+      "<p>Tag ikke andre smertestillende midler end dem, lægen eller apoteket anbefaler.</p>"
+    ],
+    kilde: { navn: "Patienthåndbogen, sundhed.dk", url: "https://www.sundhed.dk/borger/patienthaandbogen/akutte-sygdomme/sygdomme/hovedskader/hjernerystelse-hvad-er-det/" }
+  },
+  {
+    id: "bevaegelse",
+    titel: "Bevægelse og motion",
+    ikon: "aktivitet",
+    farve: 0,
+    noegleord: ["gå", "gåtur", "træne", "træning", "motion", "løbe", "løb", "sport", "cykle", "cykel", "fitness", "aktivitet", "bevæge", "puls", "svømme", "fodbold", "håndbold", "yoga"],
+    tekst: [
+      "<p>Efter de første døgn er let bevægelse godt for dig. Start med korte gåture, og øg lidt ad gangen.</p>",
+      "<p>Den nationale retningslinje anbefaler gradueret træning: du øger langsomt, styret af dine symptomer. Bliver symptomerne tydeligt værre, så skru ned igen næste gang.</p>",
+      "<p>Vent med kontaktsport og aktiviteter med risiko for et nyt slag mod hovedet, til du er symptomfri og har talt med lægen.</p>"
+    ],
+    kilde: { navn: "National klinisk retningslinje (2021)", url: "https://dcfh.dk/vaerktoejer-til-behandling-af-hjernerystelse/national-klinisk-retningslinje/" }
+  },
+  {
+    id: "arbejde",
+    titel: "Tilbage på arbejde eller studie",
+    ikon: "koncentration",
+    farve: 3,
+    noegleord: ["arbejde", "arbejd", "job", "studie", "studere", "skole", "uni", "universitet", "eksamen", "undervisning", "forelæsning", "sygemeld", "chef"],
+    tekst: [
+      "<p>Start gradvist. Nogle få timer om dagen med pauser er bedre end en hel dag og så to dage i sengen.</p>",
+      "<p>Tal med din arbejdsplads eller dit studie om, hvad du kan i starten: kortere dage, færre møder, ingen skærm i lange stræk.</p>",
+      "<p>Er du sygemeldt, så aftal med din læge, hvordan du vender tilbage.</p>"
+    ],
+    kilde: { navn: "Dansk Center for Hjernerystelse", url: "https://dcfh.dk/information-om-hjernerystelse-til-patienter-og-paaroerende/spoergsmaal-om-hjernerystelse/" }
+  },
+  {
+    id: "varighed",
+    titel: "Hvor længe varer det?",
+    ikon: "glemsom",
+    farve: 1,
+    noegleord: ["varer", "længe", "hvornår", "rask", "bedre", "senfølger", "uger", "måneder", "normalt", "forløb", "langvarig"],
+    tekst: [
+      "<p>De fleste får det meget bedre i løbet af nogle uger. Symptomerne kan komme og gå undervejs, og det er normalt.</p>",
+      "<p>Hos nogle varer symptomerne længere end en måned. Så er det vigtigt at få hjælp: lægen kan henvise til fysioterapeut, synstræning eller anden behandling, som retningslinjen anbefaler.</p>",
+      "<p>Brug loggen her i appen til at følge din udvikling. Det gør det lettere at forklare lægen, hvordan det går.</p>"
+    ],
+    kilde: { navn: "National klinisk retningslinje (2021)", url: "https://dcfh.dk/vaerktoejer-til-behandling-af-hjernerystelse/national-klinisk-retningslinje/" }
+  }
+];
+
+var chatTraad = document.getElementById("chat-traad");
+var chatForm = document.getElementById("chat-form");
+var chatFelt = document.getElementById("chat-felt");
+
+function findArtikel(id) {
+  return ARTIKLER.find(function (a) { return a.id === id; });
+}
+
+// Vis emneknapperne
+document.getElementById("emner").innerHTML = ARTIKLER.map(function (a) {
+  return '<button type="button" class="emne-knap" style="background:' + IKON_FARVER[a.farve] + '" data-artikel="' + a.id + '">' +
+    IKONER[a.ikon] + '<span>' + a.titel + '</span></button>';
+}).join("");
+
+document.getElementById("emner").addEventListener("click", function (hændelse) {
+  var knap = hændelse.target.closest(".emne-knap");
+  if (knap) visArtikel(knap.dataset.artikel);
+});
+
+function visArtikel(id) {
+  var a = findArtikel(id);
+  if (!a) return;
+  var ikon = document.getElementById("artikel-ikon");
+  ikon.innerHTML = IKONER[a.ikon];
+  ikon.style.background = IKON_FARVER[a.farve];
+  document.getElementById("artikel-titel").textContent = a.titel;
+  document.getElementById("artikel-tekst").innerHTML = a.tekst.join("");
+  document.getElementById("artikel-kilde").innerHTML = 'Kilde: <a href="' + a.kilde.url + '" target="_blank" rel="noopener">' + a.kilde.navn + '</a>';
+  visSide("viden");
+  document.getElementById("viden-oversigt").hidden = true;
+  document.getElementById("viden-artikel").hidden = false;
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("artikel-tilbage").addEventListener("click", function () {
+  document.getElementById("viden-artikel").hidden = true;
+  document.getElementById("viden-oversigt").hidden = false;
+  window.scrollTo(0, 0);
+});
+
+// Chatten: ren nøgleordssøgning. Den artikel, hvor flest nøgleord matcher, vinder.
+function soegArtikel(spoergsmaal) {
+  var tekst = " " + spoergsmaal.toLowerCase() + " ";
+  var bedste = null, bedsteScore = 0;
+  ARTIKLER.forEach(function (a) {
+    var score = a.noegleord.filter(function (ord) { return tekst.indexOf(ord.toLowerCase()) !== -1; }).length;
+    if (score > bedsteScore) { bedste = a; bedsteScore = score; }
+  });
+  return bedste;
+}
+
+function tilfoejBesked(html, fraBruger) {
+  var besked = document.createElement("div");
+  besked.className = "besked " + (fraBruger ? "besked-bruger" : "besked-app");
+  besked.innerHTML = html;
+  chatTraad.appendChild(besked);
+}
+
+function undslip(tekst) {
+  var div = document.createElement("div");
+  div.textContent = tekst;
+  return div.innerHTML;
+}
+
+chatForm.addEventListener("submit", function (hændelse) {
+  hændelse.preventDefault();
+  var spoergsmaal = chatFelt.value.trim();
+  if (!spoergsmaal) return;
+  tilfoejBesked("<p>" + undslip(spoergsmaal) + "</p>", true);
+  chatFelt.value = "";
+
+  var a = soegArtikel(spoergsmaal);
+  if (a) {
+    tilfoejBesked("<h3>" + a.titel + "</h3>" + a.tekst.join("") +
+      '<p class="besked-kilde">Kilde: <a href="' + a.kilde.url + '" target="_blank" rel="noopener">' + a.kilde.navn + "</a></p>");
+  } else {
+    tilfoejBesked("<p>Det har jeg ikke noget om. Prøv et af emnerne herunder, eller spørg din læge.</p>");
+  }
+  chatTraad.lastElementChild.scrollIntoView({ block: "nearest" });
+});
+
+tilfoejBesked("<p>Hej. Spørg mig om hjernerystelse, eller vælg et emne herunder.</p>");
+
+// ---------- Forsidens råd og lægeknap ----------
+// Rådet vælges efter, hvor langt brugeren er i forløbet.
+function opdaterRaad() {
+  var dag = dagNummer(hentProfil().skadedato);
+  var titel = document.getElementById("idag-raad-titel");
+  var tekst = document.getElementById("idag-raad-tekst");
+  var kort = document.getElementById("idag-raad");
+
+  if (!dag) {
+    titel.textContent = "Dagens råd";
+    tekst.textContent = "Udfyld din profil, så rådet passer til, hvor du er i dit forløb.";
+    kort.dataset.artikel = "foerste-dage";
+  } else if (dag <= 2) {
+    titel.textContent = "De første dage: ro";
+    tekst.textContent = "Hvil dig, og sov når du er træt. Undgå ting, der kræver meget af hovedet.";
+    kort.dataset.artikel = "foerste-dage";
+  } else if (dag <= 30) {
+    titel.textContent = "Den første måned: lidt ad gangen";
+    tekst.textContent = "Begynd langsomt på almindelige ting igen. Korte gåture er gode. Skru ned, hvis symptomerne bliver værre.";
+    kort.dataset.artikel = "bevaegelse";
+  } else {
+    titel.textContent = "Efter en måned: få hjælp";
+    tekst.textContent = "Har du stadig symptomer, så tal med din læge om henvisning. Der findes behandling, der virker.";
+    kort.dataset.artikel = "varighed";
+  }
+}
+
+document.getElementById("idag-raad").addEventListener("click", function () {
+  visArtikel(this.dataset.artikel);
+});
+
+document.getElementById("idag-laege").addEventListener("click", function () {
+  visArtikel("laege");
+});
+
 visProfilIFormular();
 opdaterLogOversigt();
 opdaterForside();
+opdaterRaad();

@@ -62,13 +62,19 @@ for hjernerystelse (2021).
   fire pastelfliser (niveau, søvn, bevægelse, medicin) og "Se alle dagens svar" bag en
   knap. Gemmes i localStorage under "hovedro-log".
   Senere: knap "Udfyld med eksempeldata" til eksamen.
-* **Viden** ("coachen"): Ingen AI. Chatfelt hvor appen matcher nøgleord og synonymer
-  mod gruppens egne danske artikler og viser artiklen som svar. Intet match giver et
-  ærligt "det har jeg ikke noget om" plus emneknapper. Den gætter aldrig. Emneknapper
-  med korte miniartikler på let dansk. Sektion "Hvem kan hjælpe" (egen læge,
-  hjerneskadekoordinator i kommunen, Hjernerystelsesforeningen, DCFH). Kildeliste med
-  links nederst. Artiklerne skrives af gruppen ud fra internationale kilder, ingen
-  oversættelse i appen. Artiklerne er ikke skrevet endnu, første udgave har pladsholdere.
+* **Viden (bygget):** Ingen AI. Chatfelt, hvor appen matcher nøgleord mod artiklerne
+  (den artikel med flest ord, der matcher, vinder) og viser hele artiklen som svar.
+  Intet match giver "Det har jeg ikke noget om". Otte emneknapper åbner artiklen på en
+  egen skærm med "Tilbage". Artiklerne ligger i script.js i listen ARTIKLER med id,
+  titel, ikon, farve, nøgleord, tekst (HTML-afsnit) og kilde. De otte: søge læge, de
+  første dage, skærm og lys, søvn, smertestillende, bevægelse, arbejde/studie, hvor
+  længe varer det. Teksterne er UDKAST skrevet konservativt efter DCFH, sundhed.dk og
+  retningslinjen, og hver artikel viser "Udkast. Gruppen skal gennemgå teksten mod
+  kilderne." Gruppen skriver de endelige tekster. "Hvem kan hjælpe" (egen læge, 112 og
+  lægevagt, hjerneskadekoordinator, Hjernerystelsesforeningen, DCFH) og kildelisten
+  ligger nederst. Forsidens "Hvornår skal jeg søge læge?" åbner den artikel, og
+  "Dagens råd" vælges efter fasen (dag 1 til 2, dag 3 til 30, derefter) og linker til
+  en artikel.
 * **Træning:** fem pladsholdere navngivet efter retningslinjen: Gradueret fysisk
   aktivitet, Balance og svimmelhed, Øjne og samsyn, Hukommelse og koncentration, Ro og
   åndedræt. Senere bygges ét spil rigtigt, de fire andre forbliver pladsholdere. Byg
@@ -103,7 +109,11 @@ der omgår det.
   AI-billedværktøj. Appen er et sideprojekt, hold tidsforbruget nede.
 
 **Rækkefølge for bygning:** 1. Skal (færdig), 2. Profil (færdig), 3. Log (færdig),
-4. Viden, 5. Træning.
+4. Viden (færdig), 5. Træning.
+
+**Fælde:** en generel regel som `.knap { width: 100% }` står sent i style.css og
+vinder over specifikke klasser med samme vægt. Brug en mere specifik vælger
+(fx `.chat-form .chat-knap`), ikke `!important`.
 
 ## Sådan arbejder Line
 
