@@ -748,6 +748,53 @@ a {
   color: var(--primaer);
 }
 
+/* Træning: Følg prikken */
+.demo-maerke {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--advarsel);
+  background: var(--flade);
+  border-radius: 999px;
+}
+
+.prik-status {
+  text-align: center;
+  font-weight: 600;
+  color: var(--tekst-svag);
+  margin-bottom: 0.75rem;
+}
+
+.prik-felt {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--blaa);
+  border-radius: 16px;
+  overflow: hidden;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+}
+
+.prik {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border-radius: 50%;
+  background: #9dbcae;
+  will-change: transform;
+}
+
+.prik.moerk {
+  background: #2f4f43;
+}
+
 /* Knapper */
 .knap {
   display: block;

@@ -218,6 +218,8 @@
 
     <!-- TRÆNING -->
     <section class="side" id="side-traening" hidden>
+
+      <div class="side-del" id="traening-oversigt">
       <h1>Træning</h1>
       <p class="hjaelp">Øvelserne bygger på den nationale kliniske retningslinje.</p>
 
@@ -232,11 +234,11 @@
           <h2>Balance og svimmelhed</h2>
           <p>Kommer senere</p>
         </div>
-        <div class="kort kort-fersken">
+        <button type="button" class="kort kort-fersken kort-knap" id="aabn-prik">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
           <h2>Øjne og samsyn</h2>
-          <p>Kommer senere</p>
-        </div>
+          <p>Følg prikken <span class="demo-maerke">Demo</span></p>
+        </button>
         <div class="kort kort-blaa">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
           <h2>Hukommelse og koncentration</h2>
@@ -246,6 +248,46 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c3-4 6-4 9 0s6 4 9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/></svg>
           <h2>Ro og åndedræt</h2>
           <p>Kommer senere</p>
+        </div>
+      </div>
+
+      <div class="kort" id="traening-seneste" hidden>
+        <h2>Seneste træning</h2>
+        <p id="traening-seneste-tekst"></p>
+      </div>
+      </div>
+
+      <!-- Spil: Følg prikken -->
+      <div class="side-del" id="spil-prik" hidden>
+        <button type="button" class="tilbage-link" id="prik-tilbage">← Tilbage til Træning</button>
+
+        <div id="prik-intro">
+          <h1>Følg prikken</h1>
+          <p class="udkast">Demo. Øvelsen er ikke gennemgået mod kilderne endnu.</p>
+          <ul class="artikel-tekst">
+            <li>Hold hovedet stille, og følg prikken kun med øjnene.</li>
+            <li>Tryk på feltet, når prikken bliver mørk.</li>
+            <li>Det tager 30 sekunder. Stop, hvis du får det dårligt.</li>
+          </ul>
+          <button type="button" class="knap knap-stor" id="prik-start">Start</button>
+        </div>
+
+        <div id="prik-spil" hidden>
+          <div class="prik-status"><span id="prik-tid">30</span> sekunder tilbage</div>
+          <div class="prik-felt" id="prik-felt">
+            <div class="prik" id="prik"></div>
+          </div>
+        </div>
+
+        <div class="kvittering-side" id="prik-resultat" hidden>
+          <svg viewBox="0 0 80 80" class="kvittering-ikon" aria-hidden="true">
+            <circle cx="40" cy="40" r="38" fill="#e3ede6"/>
+            <path d="M24 42l11 11 21-24" fill="none" stroke="#4a7565" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h1>Godt gået</h1>
+          <p id="prik-score"></p>
+          <p class="hjaelp" id="prik-reaktion"></p>
+          <button type="button" class="knap" id="prik-igen">Prøv igen</button>
         </div>
       </div>
     </section>

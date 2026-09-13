@@ -702,7 +702,165 @@ document.getElementById("idag-laege").addEventListener("click", function () {
   visArtikel("laege");
 });
 
+// ---------- Træning: Følg prikken (demo) ----------
+// Prikken bevæger sig i en blød bane. Med jævne mellemrum bliver den mørk i et
+// kort øjeblik, og brugeren skal trykke. Vi tæller træffere og reaktionstid.
+var TRAENING_NOEGLE = "hovedro-traening";
+var PRIK_VARIGHED = 30000;   // millisekunder
+var PRIK_VINDUE = 1500;      // hvor længe prikken er mørk
+
+var prikFelt = document.getElementById("prik-felt");
+var prik = document.getElementById("prik");
+var prikSpil = null;         // tilstand for det igangværende spil
+
+function hentTraening() {
+  try {
+    return JSON.parse(localStorage.getItem(TRAENING_NOEGLE)) || [];
+  } catch (fejl) {
+    return [];
+  }
+}
+
+function visSpilDel(del) {
+  document.getElementById("prik-intro").hidden = del !== "intro";
+  document.getElementById("prik-spil").hidden = del !== "spil";
+  document.getElementById("prik-resultat").hidden = del !== "resultat";
+  window.scrollTo(0, 0);
+}
+
+function aabnPrik() {
+  visSide("traening");
+  document.getElementById("traening-oversigt").hidden = true;
+  document.getElementById("spil-prik").hidden = false;
+  visSpilDel("intro");
+}
+
+function lukPrik() {
+  stopPrik();
+  document.getElementById("spil-prik").hidden = true;
+  document.getElementById("traening-oversigt").hidden = false;
+  window.scrollTo(0, 0);
+}
+
+// Planlæg de tidspunkter, hvor prikken bliver mørk: hvert 4. til 6. sekund
+function planlaegSkift() {
+  var tider = [];
+  var t = 3000 + Math.random() * 2000;
+  while (t < PRIK_VARIGHED - PRIK_VINDUE) {
+    tider.push(t);
+    t += 4000 + Math.random() * 2000;
+  }
+  return tider;
+}
+
+function startPrik() {
+  prikSpil = {
+    start: performance.now(),
+    skift: planlaegSkift(),
+    aktivtSkift: null,     // starttidspunkt for det skift, der er mørkt lige nu
+    traeffere: 0,
+    reaktioner: [],
+    animation: null
+  };
+  visSpilDel("spil");
+  prikSpil.animation = requestAnimationFrame(tegnPrik);
+}
+
+function tegnPrik(nu) {
+  if (!prikSpil) return;
+  var tid = nu - prikSpil.start;
+
+  if (tid >= PRIK_VARIGHED) {
+    afslutPrik();
+    return;
+  }
+
+  // Banen: langsom sidelæns bølge og en endnu langsommere op-og-ned bevægelse
+  var b = prikFelt.clientWidth, h = prikFelt.clientHeight;
+  var x = b / 2 + (b / 2 - 30) * Math.sin(tid / 1400);
+  var y = h / 2 + (h / 2 - 30) * Math.sin(tid / 3100);
+  prik.style.transform = "translate(" + x + "px, " + y + "px)";
+
+  // Er vi inde i et mørkt vindue?
+  var skift = prikSpil.skift.find(function (s) { return tid >= s && tid < s + PRIK_VINDUE; });
+  prik.classList.toggle("moerk", !!skift);
+  prikSpil.aktivtSkift = skift || null;
+
+  document.getElementById("prik-tid").textContent = Math.ceil((PRIK_VARIGHED - tid) / 1000);
+  prikSpil.animation = requestAnimationFrame(tegnPrik);
+}
+
+// Et tryk tæller kun, hvis prikken er mørk lige nu, og kun én gang per skift
+prikFelt.addEventListener("pointerdown", function () {
+  if (!prikSpil || prikSpil.aktivtSkift === null) return;
+  if (prikSpil.reaktioner.some(function (r) { return r.skift === prikSpil.aktivtSkift; })) return;
+  var reaktion = performance.now() - prikSpil.start - prikSpil.aktivtSkift;
+  prikSpil.traeffere++;
+  prikSpil.reaktioner.push({ skift: prikSpil.aktivtSkift, tid: reaktion });
+});
+
+function stopPrik() {
+  if (prikSpil && prikSpil.animation) cancelAnimationFrame(prikSpil.animation);
+  prikSpil = null;
+  prik.classList.remove("moerk");
+}
+
+function afslutPrik() {
+  var antal = prikSpil.skift.length;
+  var traeffere = prikSpil.traeffere;
+  var snit = prikSpil.reaktioner.length
+    ? prikSpil.reaktioner.reduce(function (s, r) { return s + r.tid; }, 0) / prikSpil.reaktioner.length
+    : null;
+
+  var resultat = {
+    spil: "prik",
+    dato: datoNoegle(),
+    tidspunkt: new Date().toISOString(),
+    varighed: PRIK_VARIGHED / 1000,
+    traeffere: traeffere,
+    antal: antal,
+    reaktion: snit === null ? null : Math.round(snit)
+  };
+  var liste = hentTraening();
+  liste.push(resultat);
+  localStorage.setItem(TRAENING_NOEGLE, JSON.stringify(liste));
+
+  stopPrik();
+  document.getElementById("prik-score").textContent = "Du fangede " + traeffere + " af " + antal + " farveskift.";
+  document.getElementById("prik-reaktion").textContent = snit === null
+    ? "Ingen reaktionstid målt."
+    : "Gennemsnitlig reaktionstid: " + (snit / 1000).toFixed(1).replace(".", ",") + " sekunder.";
+  visSpilDel("resultat");
+  opdaterTraeningOversigt();
+}
+
+function opdaterTraeningOversigt() {
+  var liste = hentTraening();
+  var kort = document.getElementById("traening-seneste");
+  kort.hidden = liste.length === 0;
+  if (!liste.length) return;
+  var s = liste[liste.length - 1];
+  var dato = new Date(s.tidspunkt);
+  document.getElementById("traening-seneste-tekst").textContent =
+    "Følg prikken, " + dato.getDate() + "/" + (dato.getMonth() + 1) + ": " +
+    s.traeffere + " af " + s.antal + " farveskift" +
+    (s.reaktion === null ? "" : ", " + (s.reaktion / 1000).toFixed(1).replace(".", ",") + " s reaktionstid") + ".";
+}
+
+document.getElementById("aabn-prik").addEventListener("click", aabnPrik);
+document.getElementById("prik-tilbage").addEventListener("click", lukPrik);
+document.getElementById("prik-start").addEventListener("click", startPrik);
+document.getElementById("prik-igen").addEventListener("click", startPrik);
+
+// Stop spillet, hvis man skifter fane midt i det
+document.querySelectorAll(".fane, #profil-knap").forEach(function (knap) {
+  knap.addEventListener("click", function () {
+    if (prikSpil) lukPrik();
+  });
+});
+
 visProfilIFormular();
 opdaterLogOversigt();
 opdaterForside();
 opdaterRaad();
+opdaterTraeningOversigt();

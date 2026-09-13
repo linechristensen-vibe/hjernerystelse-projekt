@@ -75,10 +75,16 @@ for hjernerystelse (2021).
   ligger nederst. Forsidens "Hvornår skal jeg søge læge?" åbner den artikel, og
   "Dagens råd" vælges efter fasen (dag 1 til 2, dag 3 til 30, derefter) og linker til
   en artikel.
-* **Træning:** fem pladsholdere navngivet efter retningslinjen: Gradueret fysisk
-  aktivitet, Balance og svimmelhed, Øjne og samsyn, Hukommelse og koncentration, Ro og
-  åndedræt. Senere bygges ét spil rigtigt, de fire andre forbliver pladsholdere. Byg
-  ingen spil, før Line beder om det.
+* **Træning:** fem kort navngivet efter retningslinjen: Gradueret fysisk aktivitet,
+  Balance og svimmelhed, Øjne og samsyn, Hukommelse og koncentration, Ro og åndedræt.
+  "Øjne og samsyn" åbner demospillet **Følg prikken** (bygget 13. september 2026 som
+  demo, så Line kan se mulighederne): prikken bevæger sig i en blød bane i 30
+  sekunder, bliver mørk 5 gange i 1,5 sekund, brugeren trykker på feltet. Resultat:
+  træffere af mulige og gennemsnitlig reaktionstid. Gemmes i localStorage under
+  "hovedro-traening", seneste vises på Træning-fanen. Mærket "Demo, ikke gennemgået
+  mod kilderne". De fire andre kort er pladsholdere. Balance kan ikke måles i en
+  browser (kræver bevægelsessensor), kun instruktioner. Byg ikke flere spil, før
+  gruppen har researchet, hvilke der er evidens for.
 * **Profil (bygget):** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej)
   og dato. Gemmes i localStorage under "hovedro-profil". Mørk tilstand kommer her
   senere, når resten af appen er på plads.
@@ -108,8 +114,9 @@ der omgår det.
   billedfiler udefra. Line beslutter senere, om hun vil lave figur-illustrationer med et
   AI-billedværktøj. Appen er et sideprojekt, hold tidsforbruget nede.
 
-**Rækkefølge for bygning:** 1. Skal (færdig), 2. Profil (færdig), 3. Log (færdig),
-4. Viden (færdig), 5. Træning.
+**Rækkefølge for bygning:** 1. Skal, 2. Profil, 3. Log, 4. Viden, 5. Træning. Alle fem
+er bygget. Prototypen er klar til gruppens feedback. Herfra arbejdes der i dybden ét
+sted ad gangen.
 
 **Fælde:** en generel regel som `.knap { width: 100% }` står sent i style.css og
 vinder over specifikke klasser med samme vægt. Brug en mere specifik vælger
