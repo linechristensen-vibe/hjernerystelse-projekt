@@ -58,14 +58,44 @@
       <!-- Oversigt: det man ser, når man ikke er i gang med at udfylde -->
       <div class="side-del" id="log-oversigt">
         <h1>Log</h1>
+
+        <!-- Ugestribe: de sidste 7 dage, flueben på de dage der er udfyldt -->
+        <div class="uge" id="log-uge"></div>
+
         <p class="hjaelp" id="log-status">Du har ikke udfyldt loggen i dag.</p>
         <button class="knap knap-stor" id="log-start">Udfyld dagens log</button>
 
         <div class="kort kort-blaa">
-          <h2>De sidste 7 dage</h2>
-          <p class="hjaelp">Dit samlede symptomniveau. Lavere er bedre.</p>
-          <svg class="graf" id="log-graf" viewBox="0 0 320 150" aria-label="Symptomniveau de sidste 7 dage"></svg>
+          <h2>Symptomniveau</h2>
+          <p class="hjaelp">De sidste 7 dage. Lavere er bedre.</p>
+          <svg class="graf" id="log-graf" viewBox="0 0 320 140" aria-label="Symptomniveau de sidste 7 dage"></svg>
         </div>
+
+        <!-- Fire fliser med dagens vigtigste tal -->
+        <div class="fliser" id="log-fliser" hidden>
+          <div class="flise kort-groen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            <span class="flise-tal" id="flise-niveau">0</span>
+            <span class="flise-tekst">Symptomniveau <span id="flise-niveau-maks"></span></span>
+          </div>
+          <div class="flise kort-lavendel">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span class="flise-tal" id="flise-soevn">–</span>
+            <span class="flise-tekst">Søvn i nat</span>
+          </div>
+          <div class="flise kort-fersken">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 21l3-7-2-3-4 3M11 14l3 2 2 5M9 11l3-3 3 2 3-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="flise-tal" id="flise-aktivitet">–</span>
+            <span class="flise-tekst">Bevægelse</span>
+          </div>
+          <div class="flise kort-blaa">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9.5l5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            <span class="flise-tal" id="flise-medicin">–</span>
+            <span class="flise-tekst">Medicin</span>
+          </div>
+        </div>
+
+        <button type="button" class="knap knap-sekundaer" id="log-vis-svar" hidden>Se alle dagens svar</button>
 
         <div class="kort" id="log-seneste" hidden>
           <h2>Dagens svar</h2>

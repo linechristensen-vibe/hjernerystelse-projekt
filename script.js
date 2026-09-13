@@ -137,6 +137,10 @@ var IKONER = {
   koncentration: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" ' + S + '/><circle cx="12" cy="12" r="5" ' + S + '/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
   lys:           '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" ' + S + '/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" ' + S + '/></svg>',
   stoej:         '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z" ' + S + '/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" ' + S + '/></svg>',
+  irritabel:     '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" ' + S + '/><path d="M8 15c1-1 2-1.5 4-1.5s3 .5 4 1.5M8 9l3 1.5M16 9l-3 1.5" ' + S + '/></svg>',
+  trist:         '<svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z" ' + S + '/></svg>',
+  glemsom:       '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" ' + S + '/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.7" ' + S + '/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>',
+  syn:           '<svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z" ' + S + '/><circle cx="12" cy="12" r="3" ' + S + '/><path d="M4 4l16 16" ' + S + '/></svg>',
   soevn:         '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" ' + S + '/><path d="M17 3l.5 1.5L19 5l-1.5.5L17 7l-.5-1.5L15 5l1.5-.5z" fill="currentColor"/></svg>',
   aktivitet:     '<svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="2" ' + S + '/><path d="M8 21l3-7-2-3-4 3M11 14l3 2 2 5M9 11l3-3 3 2 3-1" ' + S + '/></svg>',
   medicin:       '<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)" ' + S + '/><path d="M9.5 9.5l5 5" ' + S + '/></svg>'
@@ -154,6 +158,10 @@ var SPOERGSMAAL = [
   { id: "koncentration",  titel: "Koncentration",           tekst: "Hvor svært har du haft ved at koncentrere dig?",    svar: SYMPTOM_SKALA, symptom: true },
   { id: "lys",            titel: "Lysfølsomhed",            tekst: "Hvor generet har du været af lys?",                 svar: SYMPTOM_SKALA, symptom: true },
   { id: "stoej",          titel: "Støjfølsomhed",           tekst: "Hvor generet har du været af lyde?",                svar: SYMPTOM_SKALA, symptom: true },
+  { id: "irritabel",      titel: "Irritabilitet",           tekst: "Hvor irritabel eller kort for hovedet har du været?", svar: SYMPTOM_SKALA, symptom: true },
+  { id: "trist",          titel: "Nedtrykthed",             tekst: "Hvor trist eller nedtrykt har du været?",           svar: SYMPTOM_SKALA, symptom: true },
+  { id: "glemsom",        titel: "Glemsomhed",              tekst: "Hvor glemsom har du været?",                        svar: SYMPTOM_SKALA, symptom: true },
+  { id: "syn",            titel: "Synsproblemer",           tekst: "Hvor meget har du set sløret eller dobbelt?",       svar: SYMPTOM_SKALA, symptom: true },
   { id: "soevn",          titel: "Søvn",                    tekst: "Hvor godt sov du i nat?",                           svar: ["Rigtig dårligt", "Dårligt", "Nogenlunde", "Godt", "Rigtig godt"] },
   { id: "aktivitet",      titel: "Bevægelse",               tekst: "Hvor meget har du bevæget dig i dag?",              svar: ["Slet ikke", "Lidt, fx en kort gåtur", "Moderat", "Meget", "Rigtig meget"] }
 ];
@@ -309,6 +317,19 @@ document.getElementById("idag-log-knap").addEventListener("click", startLog);
 
 // --- Oversigten ---
 var UGEDAGE = ["S", "M", "T", "O", "T", "F", "L"];
+var MAKS_NIVEAU = SPOERGSMAAL.filter(function (s) { return s.symptom; }).length * 4;
+
+// De sidste 7 dage som liste af { dato, noegle, post, erIdag }, ældste først
+function sidste7Dage() {
+  var dage = [];
+  for (var i = 6; i >= 0; i--) {
+    var dato = new Date();
+    dato.setDate(dato.getDate() - i);
+    var noegle = datoNoegle(dato);
+    dage.push({ dato: dato, noegle: noegle, post: senesteForDato(noegle), erIdag: i === 0 });
+  }
+  return dage;
+}
 
 function opdaterLogOversigt() {
   var idag = senesteForDato(datoNoegle());
@@ -317,10 +338,13 @@ function opdaterLogOversigt() {
     : "Du har ikke udfyldt loggen i dag.";
   document.getElementById("log-start").textContent = idag ? "Udfyld igen" : "Udfyld dagens log";
 
+  tegnUge();
   tegnGraf();
+  visFliser(idag);
 
   var seneste = document.getElementById("log-seneste");
-  seneste.hidden = !idag;
+  document.getElementById("log-vis-svar").hidden = !idag;
+  seneste.hidden = true;
   if (idag) {
     var liste = document.getElementById("log-svarliste");
     liste.innerHTML = "";
@@ -341,44 +365,110 @@ function opdaterLogOversigt() {
   }
 }
 
-// Søjlegraf over de sidste 7 dage. Én farve, tynde søjler, kun dagens tal skrevet på.
+// Ugestriben: syv cirkler, flueben på udfyldte dage, i dag fremhævet
+function tegnUge() {
+  var flueben = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  document.getElementById("log-uge").innerHTML = sidste7Dage().map(function (d) {
+    return '<div class="uge-dag' + (d.post ? ' udfyldt' : '') + (d.erIdag ? ' idag' : '') + '">' +
+      '<span>' + UGEDAGE[d.dato.getDay()] + '</span>' +
+      '<div class="uge-cirkel">' + (d.post ? flueben : '') + '</div>' +
+      '</div>';
+  }).join("");
+}
+
+// Blød kurve over symptomniveauet de sidste 7 dage. Én farve, kun dagens tal skrevet på.
 function tegnGraf() {
   var svg = document.getElementById("log-graf");
-  var bredde = 320, hoejde = 150, top = 24, bund = 26, maks = 32;
+  var bredde = 320, hoejde = 140, top = 26, bund = 26;
   var grafHoejde = hoejde - top - bund;
   var kolonne = bredde / 7;
-  var soejleBredde = 18;
   var dele = [];
 
+  var punkter = sidste7Dage().map(function (d, i) {
+    var niveau = d.post ? symptomNiveau(d.post) : null;
+    return {
+      x: (i + 0.5) * kolonne,
+      y: niveau === null ? null : hoejde - bund - (niveau / MAKS_NIVEAU) * grafHoejde,
+      niveau: niveau,
+      bogstav: UGEDAGE[d.dato.getDay()],
+      erIdag: d.erIdag
+    };
+  });
+
   // grundlinje
-  dele.push('<line x1="0" y1="' + (hoejde - bund) + '" x2="' + bredde + '" y2="' + (hoejde - bund) + '" stroke="#d9d1c4" stroke-width="1"/>');
+  dele.push('<line x1="0" y1="' + (hoejde - bund) + '" x2="' + bredde + '" y2="' + (hoejde - bund) + '" stroke="#cfd9e2" stroke-width="1"/>');
 
-  for (var i = 6; i >= 0; i--) {
-    var dato = new Date();
-    dato.setDate(dato.getDate() - i);
-    var post = senesteForDato(datoNoegle(dato));
-    var x = bredde - (i + 0.5) * kolonne;
-    var erIdag = i === 0;
-
-    dele.push('<text x="' + x + '" y="' + (hoejde - 8) + '" text-anchor="middle" font-size="13"' +
-      (erIdag ? ' font-weight="600"' : '') + '>' + UGEDAGE[dato.getDay()] + '</text>');
-
-    if (post) {
-      var niveau = symptomNiveau(post);
-      var h = Math.max(4, (niveau / maks) * grafHoejde);
-      var y = hoejde - bund - h;
-      dele.push('<rect x="' + (x - soejleBredde / 2) + '" y="' + y + '" width="' + soejleBredde + '" height="' + h +
-        '" rx="4" fill="' + (erIdag ? '#4a7565' : '#9dbcae') + '"><title>' + niveau + ' af ' + maks + '</title></rect>');
-      if (erIdag) {
-        dele.push('<text x="' + x + '" y="' + (y - 8) + '" text-anchor="middle" font-size="14" font-weight="600">' + niveau + '</text>');
-      }
+  // Kurven tegnes kun mellem dage, der ligger lige efter hinanden og begge er
+  // udfyldt. En tom dag giver et hul, så man kan se, at der mangler en udfyldning.
+  var stykker = [];
+  var aktuelt = [];
+  punkter.forEach(function (p) {
+    if (p.y === null) {
+      if (aktuelt.length) stykker.push(aktuelt);
+      aktuelt = [];
     } else {
-      // ingen udfyldning den dag: en lille prik på grundlinjen
-      dele.push('<circle cx="' + x + '" cy="' + (hoejde - bund) + '" r="3" fill="#d9d1c4"/>');
+      aktuelt.push(p);
     }
-  }
+  });
+  if (aktuelt.length) stykker.push(aktuelt);
+
+  stykker.forEach(function (stykke) {
+    if (stykke.length < 2) return;
+    var linje = "M" + stykke[0].x + " " + stykke[0].y;
+    for (var i = 1; i < stykke.length; i++) {
+      var a = stykke[i - 1], b = stykke[i];
+      var midt = (a.x + b.x) / 2;
+      linje += " C" + midt + " " + a.y + ", " + midt + " " + b.y + ", " + b.x + " " + b.y;
+    }
+    var flade = linje + " L" + stykke[stykke.length - 1].x + " " + (hoejde - bund) + " L" + stykke[0].x + " " + (hoejde - bund) + " Z";
+    dele.push('<path d="' + flade + '" fill="#4a7565" opacity="0.12"/>');
+    dele.push('<path d="' + linje + '" fill="none" stroke="#4a7565" stroke-width="2.5" stroke-linecap="round"/>');
+  });
+
+  punkter.forEach(function (p) {
+    dele.push('<text x="' + p.x + '" y="' + (hoejde - 8) + '" text-anchor="middle" font-size="13"' +
+      (p.erIdag ? ' font-weight="600"' : '') + '>' + p.bogstav + '</text>');
+    if (p.y === null) {
+      dele.push('<circle cx="' + p.x + '" cy="' + (hoejde - bund) + '" r="3" fill="#cfd9e2"/>');
+    } else {
+      dele.push('<circle cx="' + p.x + '" cy="' + p.y + '" r="' + (p.erIdag ? 6 : 4) + '" fill="#4a7565" stroke="#e0e8ef" stroke-width="2"><title>' + p.niveau + ' af ' + MAKS_NIVEAU + '</title></circle>');
+      if (p.erIdag) {
+        dele.push('<text x="' + p.x + '" y="' + (p.y - 12) + '" text-anchor="middle" font-size="14" font-weight="600">' + p.niveau + '</text>');
+      }
+    }
+  });
+
   svg.innerHTML = dele.join("");
 }
+
+// De fire fliser med dagens vigtigste tal
+function visFliser(idag) {
+  document.getElementById("log-fliser").hidden = !idag;
+  if (!idag) return;
+
+  var svarTekst = function (id) {
+    var sp = SPOERGSMAAL.find(function (s) { return s.id === id; });
+    return idag.svar[id] === undefined ? "–" : sp.svar[idag.svar[id]].split(",")[0];
+  };
+
+  document.getElementById("flise-niveau").textContent = symptomNiveau(idag);
+  document.getElementById("flise-niveau-maks").textContent = "af " + MAKS_NIVEAU;
+  document.getElementById("flise-soevn").textContent = svarTekst("soevn");
+  document.getElementById("flise-aktivitet").textContent = svarTekst("aktivitet");
+
+  var m = idag.medicin;
+  var dele = [];
+  if (m.panodil) dele.push(m.panodil + " Panodil");
+  if (m.ipren) dele.push(m.ipren + " Ipren");
+  if (m.vanlig) dele.push("Vanlig");
+  document.getElementById("flise-medicin").textContent = dele.length ? dele.join(" + ") : "Ingen";
+}
+
+document.getElementById("log-vis-svar").addEventListener("click", function () {
+  var liste = document.getElementById("log-seneste");
+  liste.hidden = !liste.hidden;
+  this.textContent = liste.hidden ? "Se alle dagens svar" : "Skjul dagens svar";
+});
 
 visProfilIFormular();
 opdaterLogOversigt();

@@ -48,17 +48,19 @@ for hjernerystelse (2021).
 * **I dag** (forsiden): "Dag X efter din hjernerystelse" (regnet fra profilens dato),
   én stor knap "Udfyld dagens log", et kort råd der passer til fasen (første 48 timer,
   første måned, derefter), og en altid synlig knap "Hvornår skal jeg søge læge?".
-* **Log** (symptomlog, bygget): 11 trin, ét spørgsmål per skærm. Otte symptomer på
-  RPQ-skalaen 0 til 4 (slet ikke, lidt, moderat, meget, rigtig meget): hovedpine,
-  svimmelhed, kvalme, træthed, nakkesmerter, koncentration, lysfølsomhed, støjfølsomhed.
-  Derefter søvn (rigtig dårligt til rigtig godt) og bevægelse (slet ikke til rigtig
-  meget), som ikke tæller med i symptomniveauet. Til sidst medicin: Panodil og Ipren
-  med antal, plus knappen "Jeg har taget min vanlige medicin". Ingen "andet"-felt.
-  "Færdig" gemmer når som helst, man behøver ikke svare på alt. Flere udfyldninger om
-  dagen er tilladt, oversigten bruger den seneste. Symptomniveau = sum af de otte
-  symptomer (0 til 32). Kvitteringen viser, hvor mange sekunder det tog. Oversigten
-  har en 7-dages søjlegraf (én farve, kun dagens tal skrevet på, prik for tomme dage)
-  og "Dagens svar". Gemmes i localStorage under "hovedro-log".
+* **Log** (symptomlog, bygget): 15 trin, ét spørgsmål per skærm med ikon i farvet
+  cirkel og fremgangslinje. Tolv symptomer på RPQ-skalaen 0 til 4 (slet ikke, lidt,
+  moderat, meget, rigtig meget): hovedpine, svimmelhed, kvalme, træthed, nakkesmerter
+  (ikke i RPQ, Lines ønske), koncentration, lysfølsomhed, støjfølsomhed, irritabilitet,
+  nedtrykthed, glemsomhed, synsproblemer. Udeladt fra RPQ: frustration, langsom
+  tænkning, rastløshed (overlapper). Derefter søvn og bevægelse (tæller ikke med i
+  niveauet). Til sidst medicin: Panodil og Ipren med antal, plus "Jeg har taget min
+  vanlige medicin". Ingen "andet"-felt. "Færdig" gemmer når som helst. Flere
+  udfyldninger om dagen er tilladt, oversigten bruger den seneste. Symptomniveau =
+  sum af de tolv (0 til 48). Kvitteringen viser sekunder brugt. Oversigten: ugestribe
+  med flueben, blød kurve over 7 dage (hul ved tomme dage, kun dagens tal skrevet på),
+  fire pastelfliser (niveau, søvn, bevægelse, medicin) og "Se alle dagens svar" bag en
+  knap. Gemmes i localStorage under "hovedro-log".
   Senere: knap "Udfyld med eksempeldata" til eksamen.
 * **Viden** ("coachen"): Ingen AI. Chatfelt hvor appen matcher nøgleord og synonymer
   mod gruppens egne danske artikler og viser artiklen som svar. Intet match giver et
@@ -166,3 +168,8 @@ Punkter, der skal afklares med Line, og som du skal huske at tage op, når de bl
 relevante. Slet et punkt herfra, når det er afgjort, og skriv beslutningen ovenfor.
 
 * Hvilket ét af de fem træningsspil der bygges rigtigt (kræver research først).
+* "Ugens tjek": det fulde RPQ (16 spørgsmål, om de sidste 7 dage, officiel ordlyd og
+  score) som en separat ugentlig udfyldning ved siden af den daglige log. Line og jeg
+  er enige om, at det giver mening, men det bygges først, når resten af appen er på
+  plads.
+* Knap "Udfyld med eksempeldata", så gruppen kan vise 14 dages log til eksamen.
