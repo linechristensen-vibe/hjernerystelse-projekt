@@ -194,6 +194,7 @@ Kort, én til to linjer per beslutning.
 * Appen er på dansk. Målgruppe: voksne over 18 med hjernerystelse.
 * Appen designes udelukkende til telefon. Slutbrugeren bruger aldrig computer. Line tester fra computer, så den skal bare ikke gå i stykker på en bred skærm.
 * "Coachen" er ikke en AI-chat (umuligt uden backend og API-nøgle). Den er en nøgleordssøgning i gruppens egne danske artikler, pakket ind som chat, plus emneknapper og kildefane.
+* **Prototypen er frosset fra 14. september 2026**, hvor den sendes til gruppen. Ingen ændringer i appen, før gruppens feedback er kommet og Line siger til. Næste session starter med at tage feedbacken op, ét punkt ad gangen.
 
 ## Åbne punkter
 
