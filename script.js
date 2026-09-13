@@ -1074,6 +1074,72 @@ document.querySelectorAll(".fane, #profil-knap").forEach(function (knap) {
   });
 });
 
+// ---------- Testdata (kun til gruppens test, fjernes senere) ----------
+// Fylder appen med 12 dages log, en profil og otte træninger, så man ikke skal
+// udfylde alt selv hver gang. "Ryd" fjerner alt, appen har gemt.
+function datoForDageSiden(dage) {
+  var d = new Date();
+  d.setDate(d.getDate() - dage);
+  return d;
+}
+
+function udfyldTestdata() {
+  gemProfil({
+    navn: "Test",
+    alder: "34",
+    skadedato: datoNoegle(datoForDageSiden(11)),
+    laege: "ja",
+    laegedato: datoNoegle(datoForDageSiden(9))
+  });
+
+  // Symptomer, der falder over 12 dage, med en dårlig dag på dag 8 (i går var fri)
+  var symptomer = SPOERGSMAAL.filter(function (s) { return s.symptom; });
+  var log = [];
+  [3, 3, 3, 2, 2, 2, 1, 3, 1, 1, null, 1].forEach(function (grundniveau, i) {
+    if (grundniveau === null) return; // en dag uden udfyldning, så man kan se hullet
+    var d = datoForDageSiden(11 - i);
+    d.setHours(9, 0, 0, 0);
+    var svar = {};
+    symptomer.forEach(function (s, j) {
+      var v = grundniveau + ((j * 7 + i) % 3 === 0 ? 1 : 0) - ((j + i) % 4 === 0 ? 1 : 0);
+      svar[s.id] = Math.max(0, Math.min(4, v));
+    });
+    svar.soevn = Math.min(4, 1 + Math.floor(i / 3));
+    svar.aktivitet = Math.min(4, Math.floor(i / 3));
+    log.push({
+      dato: datoNoegle(d),
+      tidspunkt: d.toISOString(),
+      svar: svar,
+      medicin: { panodil: grundniveau >= 2 ? 2 : 0, ipren: 0, vanlig: true }
+    });
+  });
+  gemLog(log);
+
+  // Otte træninger med bedre reaktionstid og stigende niveau
+  var traening = [];
+  [[9, 0, 3, 5, 900], [8, 0, 4, 5, 780], [7, 0, 4, 5, 700], [6, 1, 3, 5, 720],
+   [4, 1, 4, 5, 640], [3, 1, 4, 5, 610], [2, 2, 3, 5, 590], [0, 2, 4, 5, 560]].forEach(function (t) {
+    var d = datoForDageSiden(t[0]);
+    d.setHours(16, 0, 0, 0);
+    traening.push({ spil: "prik", niveau: t[1], dato: datoNoegle(d), tidspunkt: d.toISOString(), varighed: 30, traeffere: t[2], antal: t[3], reaktion: t[4] });
+  });
+  localStorage.setItem(TRAENING_NOEGLE, JSON.stringify(traening));
+  localStorage.setItem(UGEMAAL_NOEGLE, "4");
+  localStorage.setItem("hovedro-fuld-uge", "ja");
+
+  location.reload();
+}
+
+function rydTestdata() {
+  Object.keys(localStorage).forEach(function (noegle) {
+    if (noegle.indexOf("hovedro-") === 0) localStorage.removeItem(noegle);
+  });
+  location.reload();
+}
+
+document.getElementById("testdata-udfyld").addEventListener("click", udfyldTestdata);
+document.getElementById("testdata-ryd").addEventListener("click", rydTestdata);
+
 visProfilIFormular();
 opdaterLogOversigt();
 opdaterForside();

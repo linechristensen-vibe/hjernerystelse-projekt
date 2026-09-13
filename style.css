@@ -145,6 +145,26 @@ a {
   margin-top: 1rem;
 }
 
+/* Testdata-links: små og diskrete, men nemme at ramme */
+.testdata {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--kant);
+  margin-top: 2rem;
+}
+
+.testdata button {
+  min-height: 44px;
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--tekst-svag);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* Kort */
 .kort {
   background: var(--flade);

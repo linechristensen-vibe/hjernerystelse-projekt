@@ -61,7 +61,10 @@ for hjernerystelse (2021).
   med flueben, blød kurve over 7 dage (hul ved tomme dage, kun dagens tal skrevet på),
   fire pastelfliser (niveau, søvn, bevægelse, medicin) og "Se alle dagens svar" bag en
   knap. Gemmes i localStorage under "hovedro-log".
-  Senere: knap "Udfyld med eksempeldata" til eksamen.
+* **Testdata (bygget):** to små tekstlinks nederst på forsiden. "Udfyld testdata"
+  lægger profil (Test, dag 12), 11 dages log med faldende symptomer og ét hul, og otte
+  træninger med stigende niveau ind. "Ryd testdata" sletter alt, appen har gemt
+  (alle nøgler, der starter med "hovedro-"). Begge genindlæser siden.
 * **Viden (bygget):** Ingen AI. Chatfelt, hvor appen matcher nøgleord mod artiklerne
   (den artikel med flest ord, der matcher, vinder) og viser hele artiklen som svar.
   Intet match giver "Det har jeg ikke noget om". Otte emneknapper åbner artiklen på en
@@ -206,4 +209,6 @@ relevante. Slet et punkt herfra, når det er afgjort, og skriv beslutningen oven
   score) som en separat ugentlig udfyldning ved siden af den daglige log. Line og jeg
   er enige om, at det giver mening, men det bygges først, når resten af appen er på
   plads.
-* Knap "Udfyld med eksempeldata", så gruppen kan vise 14 dages log til eksamen.
+* Testdata-linkene på forsiden ("Udfyld testdata" og "Ryd testdata", funktionerne
+  udfyldTestdata og rydTestdata i script.js) skal fjernes, når gruppen ikke længere
+  skal bruge dem. Line siger til.
