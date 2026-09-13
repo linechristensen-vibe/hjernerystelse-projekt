@@ -16,7 +16,6 @@
   --blaa: #e0e8ef;
 
   --skrift: 18px;
-  --overskrift: Georgia, "Times New Roman", serif;
 }
 
 * {
@@ -52,8 +51,7 @@ main {
 }
 
 h1, h2 {
-  font-family: var(--overskrift);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -91,8 +89,7 @@ a {
 }
 
 .topbar-title {
-  font-family: var(--overskrift);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.15rem;
 }
 
@@ -497,9 +494,8 @@ a {
 }
 
 .flise-tal {
-  font-family: var(--overskrift);
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
   line-height: 1.1;
 }
 

@@ -95,8 +95,8 @@ der omgår det.
 * Kort ansvarsfraskrivelse ("erstatter ikke lægen") på forsiden.
 * Visuel retning (fra Lines inspirationsbilleder, wellness-apps i pastel): varm beige
   baggrund, kort i dæmpede pasteller (grøn, lavendel, fersken, blå), runde hjørner,
-  serif-overskrifter (Georgia, ingen Google Fonts), hilsen med navn, ansigtsrække,
-  ugestribe, statistik-fliser. Skru ned i forhold til inspirationen: én illustration per
+  hilsen med navn, ansigtsrække, ugestribe, statistik-fliser. Kun én skrifttype:
+  systemets sans serif (ingen serif, ingen Google Fonts). Overskrifter er bare fede. Skru ned i forhold til inspirationen: én illustration per
   skærm, ingen mættede farver (orange, pink), ingen AI-mærkater eller notifikationsklokker.
 * Al grafik tegnes selv i SVG (ikoner, enkle flade illustrationer, grafer). Ingen
   billedfiler udefra. Line beslutter senere, om hun vil lave figur-illustrationer med et
