@@ -105,10 +105,31 @@
   </main>
 
   <nav class="faner">
-    <button class="fane aktiv" data-side="idag">I dag</button>
-    <button class="fane" data-side="log">Log</button>
-    <button class="fane" data-side="viden">Viden</button>
-    <button class="fane" data-side="traening">Træning</button>
+    <button class="fane aktiv" data-side="idag">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span>I dag</span>
+    </button>
+    <button class="fane" data-side="log">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 9h8M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Log</span>
+    </button>
+    <button class="fane" data-side="viden">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 5a2 2 0 0 1 2-2h6v18H6a2 2 0 0 0-2 2z M12 3h6a2 2 0 0 1 2 2v18a2 2 0 0 0-2-2h-6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span>Viden</span>
+    </button>
+    <button class="fane" data-side="traening">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 12h2M18 12h2M6 8v8M18 8v8M9 6v12M15 6v12M9 12h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Træning</span>
+    </button>
   </nav>
 
   <script src="script.js"></script>

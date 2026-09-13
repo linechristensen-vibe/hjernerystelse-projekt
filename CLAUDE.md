@@ -66,9 +66,20 @@ for hjernerystelse (2021).
 * **Profil:** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej) og dato.
   Gemmes i browseren. Mørk tilstand som valg her.
 
-**Udseende:** dæmpet lys baggrund (aldrig rent hvid), stor skrift, ingen animationer,
-få elementer per skærm, én tydelig handling ad gangen. Kort ansvarsfraskrivelse
-("erstatter ikke lægen") på forsiden.
+**Udseende og UX-principper** (fra research, se kilderne i appen):
+* Dæmpet lys baggrund (aldrig rent hvid), skrift mindst 18 px, ingen animationer.
+* Faner har ikon plus tekst. Alle knapper mindst 48 px høje med luft imellem.
+* Ét emne per skærm. Loggen er én skærm per spørgsmål med fem store knapper, en
+  tæller ("3 af 10") og "Færdig" altid synlig. Mål: hele loggen under 60 sekunder.
+* Efter loggen: rolig kvittering ("Gemt. Godt gået.") og en simpel graf over de sidste
+  7 dage. Ingen røde advarsler i grafen, kun positiv feedback.
+* Forsiden hilser med navn ("Hej Line, dag 4") og viser tydeligt, om dagens log er udfyldt.
+* Plain sprog, samme navigation overalt, tydelig kvittering når noget gemmes, intet
+  skjult i menuer, intet der kræver at brugeren husker fra én skærm til den næste.
+* Ingen push-påmindelser (kræver server).
+* Kort ansvarsfraskrivelse ("erstatter ikke lægen") på forsiden.
+* Line sender screenshots af apps, hun synes er godt designet. Brug det, der passer med
+  principperne ovenfor, og sig fra på det, der ikke gør.
 
 **Rækkefølge for bygning:** 1. Skal, 2. Profil, 3. Log, 4. Viden, 5. Træning.
 
