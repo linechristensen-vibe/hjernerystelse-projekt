@@ -126,6 +126,23 @@ var LOG_NOEGLE = "hovedro-log";
 // Skalaen bygger på RPQ (Rivermead): 0 til 4
 var SYMPTOM_SKALA = ["Slet ikke", "Lidt", "Moderat", "Meget", "Rigtig meget"];
 
+// Små ikoner til hvert trin, så man kan se, at skærmen har skiftet
+var S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+var IKONER = {
+  hovedpine:     '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7" ' + S + '/><path d="M12 2v3M5 5l2 2M19 5l-2 2" ' + S + '/></svg>',
+  svimmelhed:    '<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 1-9 9" ' + S + '/><path d="M12 8a4 4 0 1 1-4 4" ' + S + '/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>',
+  kvalme:        '<svg viewBox="0 0 24 24"><path d="M3 8c3-3 6-3 9 0s6 3 9 0M3 13c3-3 6-3 9 0s6 3 9 0M3 18c3-3 6-3 9 0s6 3 9 0" ' + S + '/></svg>',
+  traethed:      '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="16" height="9" rx="2" ' + S + '/><path d="M21 11v3M6 11v3" ' + S + '/></svg>',
+  nakke:         '<svg viewBox="0 0 24 24"><circle cx="12" cy="6" r="3" ' + S + '/><path d="M10 9v4M14 9v4M4 20c0-4 3-7 8-7s8 3 8 7" ' + S + '/></svg>',
+  koncentration: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" ' + S + '/><circle cx="12" cy="12" r="5" ' + S + '/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
+  lys:           '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" ' + S + '/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" ' + S + '/></svg>',
+  stoej:         '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z" ' + S + '/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" ' + S + '/></svg>',
+  soevn:         '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" ' + S + '/><path d="M17 3l.5 1.5L19 5l-1.5.5L17 7l-.5-1.5L15 5l1.5-.5z" fill="currentColor"/></svg>',
+  aktivitet:     '<svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="2" ' + S + '/><path d="M8 21l3-7-2-3-4 3M11 14l3 2 2 5M9 11l3-3 3 2 3-1" ' + S + '/></svg>',
+  medicin:       '<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)" ' + S + '/><path d="M9.5 9.5l5 5" ' + S + '/></svg>'
+};
+var IKON_FARVER = ["#e3ede6", "#e8e3f0", "#f6e4dc", "#e0e8ef"];
+
 // Spørgsmålene i den rækkefølge, de stilles. De otte første tæller med i
 // symptomniveauet. Søvn og bevægelse er med for overblikkets skyld.
 var SPOERGSMAAL = [
@@ -206,12 +223,19 @@ function startLog() {
 
 function visTrin() {
   document.getElementById("log-taeller").textContent = (aktueltTrin + 1) + " af " + ANTAL_TRIN;
+  document.getElementById("log-fremgang").style.width = ((aktueltTrin + 1) / ANTAL_TRIN * 100) + "%";
   logTilbage.hidden = aktueltTrin === 0;
   var erMedicin = aktueltTrin === SPOERGSMAAL.length;
 
   logSvar.hidden = erMedicin;
   logMedicin.hidden = !erMedicin;
   logFaerdig.textContent = erMedicin ? "Gem" : "Færdig";
+
+  // Ikonet og cirklens farve skifter for hvert trin
+  var ikonNavn = erMedicin ? "medicin" : SPOERGSMAAL[aktueltTrin].id;
+  var ikon = document.getElementById("log-ikon");
+  ikon.innerHTML = IKONER[ikonNavn];
+  ikon.style.background = IKON_FARVER[aktueltTrin % IKON_FARVER.length];
 
   if (erMedicin) {
     document.getElementById("log-spoergsmaal").textContent = "Har du taget medicin i dag?";

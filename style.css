@@ -285,9 +285,52 @@ a {
 }
 
 .taeller {
-  margin: 0;
+  margin: 0 0 0.5rem;
   color: var(--tekst-svag);
   font-weight: 600;
+}
+
+/* Fremgangslinje, fyldes op trin for trin */
+.fremgang {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--kant);
+  overflow: hidden;
+}
+
+.fremgang span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--primaer);
+}
+
+/* Ikon og spørgsmål ved siden af hinanden */
+.log-hoved {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.log-hoved h1 {
+  margin: 0.25rem 0 0;
+  font-size: 1.6rem;
+}
+
+.log-ikon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primaer);
+}
+
+.log-ikon svg {
+  width: 34px;
+  height: 34px;
 }
 
 /* Svarknapperne: fem store knapper under hinanden */
