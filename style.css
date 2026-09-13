@@ -1,14 +1,22 @@
 /* Farver og størrelser samlet ét sted, så de er nemme at ændre */
 :root {
-  --baggrund: #f3f0ea;      /* dæmpet, aldrig rent hvid */
-  --flade: #faf8f4;         /* kort og bjælker */
-  --tekst: #2b2b2b;
-  --tekst-svag: #5f5f5f;
-  --kant: #d9d4cb;
-  --primaer: #3d6b5e;       /* rolig grøn til hovedknapper */
+  --baggrund: #f4efe6;      /* varm beige, aldrig rent hvid */
+  --flade: #fbf8f2;         /* kort og bjælker */
+  --tekst: #2f2a26;
+  --tekst-svag: #6b625a;
+  --kant: #e2d9cc;
+  --primaer: #4a7565;       /* rolig grøn til hovedknapper */
   --primaer-tekst: #ffffff;
-  --advarsel: #b0533a;      /* dæmpet rød til "søg læge" */
+  --advarsel: #a8523c;      /* dæmpet rød til "søg læge" */
+
+  /* dæmpede pasteller til kort */
+  --groen: #e3ede6;
+  --lavendel: #e8e3f0;
+  --fersken: #f6e4dc;
+  --blaa: #e0e8ef;
+
   --skrift: 18px;
+  --overskrift: Georgia, "Times New Roman", serif;
 }
 
 * {
@@ -38,13 +46,19 @@ main {
   padding: 1.25rem 1.25rem 2rem;
 }
 
+h1, h2 {
+  font-family: var(--overskrift);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
 h1 {
-  font-size: 1.6rem;
-  margin: 0.5rem 0 0.5rem;
+  font-size: 1.9rem;
+  margin: 0.5rem 0;
 }
 
 h2 {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   margin: 0 0 0.4rem;
 }
 
@@ -72,7 +86,9 @@ a {
 }
 
 .topbar-title {
+  font-family: var(--overskrift);
   font-weight: 600;
+  font-size: 1.15rem;
 }
 
 .profil-knap {
@@ -102,10 +118,27 @@ a {
   color: var(--tekst-svag);
 }
 
-.dag-taeller {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0.5rem 0 0;
+/* Hilsen på forsiden */
+.hilsen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hilsen-lille {
+  margin: 0;
+  color: var(--tekst-svag);
+}
+
+.hilsen-stor {
+  margin: 0 0 0.25rem;
+}
+
+.hilsen-illustration {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
 }
 
 .ansvar {
@@ -118,7 +151,7 @@ a {
 .kort {
   background: var(--flade);
   border: 1px solid var(--kant);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.25rem;
 }
 
@@ -126,10 +159,10 @@ a {
   margin-bottom: 0;
 }
 
-.kort-pladsholder {
-  border-style: dashed;
-  color: var(--tekst-svag);
-}
+.kort-groen    { background: var(--groen);    border-color: transparent; }
+.kort-lavendel { background: var(--lavendel); border-color: transparent; }
+.kort-fersken  { background: var(--fersken);  border-color: transparent; }
+.kort-blaa     { background: var(--blaa);     border-color: transparent; }
 
 .kildeliste {
   margin: 0;
@@ -138,6 +171,33 @@ a {
 
 .kildeliste li {
   margin-bottom: 0.6rem;
+}
+
+/* Træning: to kort ved siden af hinanden */
+.traening-gitter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.traening-gitter .kort {
+  padding: 1rem;
+}
+
+.traening-gitter svg {
+  width: 32px;
+  height: 32px;
+  color: var(--primaer);
+  margin-bottom: 0.5rem;
+}
+
+.traening-gitter h2 {
+  font-size: 1.05rem;
+}
+
+.traening-gitter p {
+  font-size: 0.9rem;
+  color: var(--tekst-svag);
 }
 
 /* Knapper */
@@ -149,7 +209,7 @@ a {
   font-size: 1.1rem;
   font-family: inherit;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   background: var(--primaer);
   color: var(--primaer-tekst);
   cursor: pointer;

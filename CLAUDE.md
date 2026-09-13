@@ -78,8 +78,14 @@ for hjernerystelse (2021).
   skjult i menuer, intet der kræver at brugeren husker fra én skærm til den næste.
 * Ingen push-påmindelser (kræver server).
 * Kort ansvarsfraskrivelse ("erstatter ikke lægen") på forsiden.
-* Line sender screenshots af apps, hun synes er godt designet. Brug det, der passer med
-  principperne ovenfor, og sig fra på det, der ikke gør.
+* Visuel retning (fra Lines inspirationsbilleder, wellness-apps i pastel): varm beige
+  baggrund, kort i dæmpede pasteller (grøn, lavendel, fersken, blå), runde hjørner,
+  serif-overskrifter (Georgia, ingen Google Fonts), hilsen med navn, ansigtsrække,
+  ugestribe, statistik-fliser. Skru ned i forhold til inspirationen: én illustration per
+  skærm, ingen mættede farver (orange, pink), ingen AI-mærkater eller notifikationsklokker.
+* Al grafik tegnes selv i SVG (ikoner, enkle flade illustrationer, grafer). Ingen
+  billedfiler udefra. Line beslutter senere, om hun vil lave figur-illustrationer med et
+  AI-billedværktøj. Appen er et sideprojekt, hold tidsforbruget nede.
 
 **Rækkefølge for bygning:** 1. Skal, 2. Profil, 3. Log, 4. Viden, 5. Træning.
 

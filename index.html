@@ -22,12 +22,26 @@
 
     <!-- I DAG -->
     <section class="side" id="side-idag">
-      <p class="dag-taeller">Dag ? efter din hjernerystelse</p>
-      <p class="hjaelp">Udfyld din profil, så appen kan tælle dagene for dig.</p>
+      <div class="hilsen">
+        <div>
+          <p class="hilsen-lille">Godmorgen</p>
+          <h1 class="hilsen-stor">Hej</h1>
+          <p class="hjaelp">Udfyld din profil, så appen kan tælle dagene for dig.</p>
+        </div>
+        <!-- Enkel illustration: hjerne i en blød cirkel med et blad -->
+        <svg class="hilsen-illustration" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="56" fill="#e6efe9"/>
+          <path d="M42 40c-9 0-15 7-14 15-5 3-6 11-1 15-1 7 5 12 12 11 3 5 10 6 15 2V38c-3-3-8-3-12 2z" fill="#f2c9c2"/>
+          <path d="M78 40c9 0 15 7 14 15 5 3 6 11 1 15 1 7-5 12-12 11-3 5-10 6-15 2V38c3-3 8-3 12 2z" fill="#f2c9c2"/>
+          <path d="M45 50c4-2 8 1 10 5M40 62c4 0 8 3 9 7M74 50c-4-2-8 1-10 5M80 62c-4 0-8 3-9 7" fill="none" stroke="#d99b92" stroke-width="2" stroke-linecap="round"/>
+          <path d="M60 86c0 8-6 14-14 16 2-8 6-14 14-16z" fill="#7aa38f"/>
+          <path d="M60 86c8 2 12 8 14 16-8-2-14-8-14-16z" fill="#5c8a75"/>
+        </svg>
+      </div>
 
       <button class="knap knap-stor">Udfyld dagens log</button>
 
-      <div class="kort">
+      <div class="kort kort-groen">
         <h2>Dagens råd</h2>
         <p>Her kommer et kort råd, der passer til, hvor du er i dit forløb.</p>
       </div>
@@ -48,7 +62,7 @@
       <h1>Viden</h1>
       <p class="hjaelp">Her kommer chatfeltet og emnerne.</p>
 
-      <div class="kort">
+      <div class="kort kort-lavendel">
         <h2>Hvem kan hjælpe</h2>
         <p>Her kommer en kort oversigt over, hvem du kan kontakte.</p>
       </div>
@@ -74,25 +88,32 @@
       <h1>Træning</h1>
       <p class="hjaelp">Øvelserne bygger på den nationale kliniske retningslinje.</p>
 
-      <div class="kort kort-pladsholder">
-        <h2>Gradueret fysisk aktivitet</h2>
-        <p>Kommer senere</p>
-      </div>
-      <div class="kort kort-pladsholder">
-        <h2>Balance og svimmelhed</h2>
-        <p>Kommer senere</p>
-      </div>
-      <div class="kort kort-pladsholder">
-        <h2>Øjne og samsyn</h2>
-        <p>Kommer senere</p>
-      </div>
-      <div class="kort kort-pladsholder">
-        <h2>Hukommelse og koncentration</h2>
-        <p>Kommer senere</p>
-      </div>
-      <div class="kort kort-pladsholder">
-        <h2>Ro og åndedræt</h2>
-        <p>Kommer senere</p>
+      <div class="traening-gitter">
+        <div class="kort kort-groen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3l-2 7h4l-4 11 2-8H9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <h2>Gradueret fysisk aktivitet</h2>
+          <p>Kommer senere</p>
+        </div>
+        <div class="kort kort-lavendel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l9-4 9 4M12 13V5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="4" r="1.5" fill="currentColor"/></svg>
+          <h2>Balance og svimmelhed</h2>
+          <p>Kommer senere</p>
+        </div>
+        <div class="kort kort-fersken">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <h2>Øjne og samsyn</h2>
+          <p>Kommer senere</p>
+        </div>
+        <div class="kort kort-blaa">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <h2>Hukommelse og koncentration</h2>
+          <p>Kommer senere</p>
+        </div>
+        <div class="kort kort-groen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c3-4 6-4 9 0s6 4 9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/></svg>
+          <h2>Ro og åndedræt</h2>
+          <p>Kommer senere</p>
+        </div>
       </div>
     </section>
 
