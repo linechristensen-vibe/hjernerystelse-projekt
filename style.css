@@ -23,6 +23,11 @@
   box-sizing: border-box;
 }
 
+/* Alt med hidden skal være væk, uanset hvilke display-regler det ellers har */
+[hidden] {
+  display: none !important;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -108,10 +113,6 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-}
-
-.side[hidden] {
-  display: none;
 }
 
 .hjaelp {
@@ -234,10 +235,6 @@ a {
   outline-offset: 1px;
 }
 
-.felt[hidden] {
-  display: none;
-}
-
 /* Ja/nej-valg og lignende: knapper ved siden af hinanden */
 .valg {
   display: flex;
@@ -269,6 +266,154 @@ a {
   text-align: center;
 }
 
+/* Log */
+.side-del {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.log-udfyldt {
+  color: var(--primaer);
+  font-weight: 600;
+  text-align: center;
+  margin: -0.5rem 0 0;
+}
+
+.log-udfyldt::before {
+  content: "✓ ";
+}
+
+.taeller {
+  margin: 0;
+  color: var(--tekst-svag);
+  font-weight: 600;
+}
+
+/* Svarknapperne: fem store knapper under hinanden */
+.svar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.svar-knap {
+  min-height: 3.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.15rem;
+  font-family: inherit;
+  text-align: left;
+  color: var(--tekst);
+  background: var(--flade);
+  border: 2px solid var(--kant);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.svar-knap.valgt {
+  background: var(--groen);
+  border-color: var(--primaer);
+  color: var(--primaer);
+  font-weight: 600;
+}
+
+.skema-knapper {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.skema-knapper .knap {
+  flex: 1;
+}
+
+/* Medicin */
+.medicin-raekke {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--kant);
+}
+
+.medicin-raekke small {
+  color: var(--tekst-svag);
+  font-size: 0.85rem;
+}
+
+.taeller-knapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tael-knap {
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  font-family: inherit;
+  color: var(--primaer);
+  background: var(--flade);
+  border: 2px solid var(--kant);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tael-tal {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.valg-bred {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Kvittering efter gem */
+.kvittering-side {
+  align-items: center;
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.kvittering-ikon {
+  width: 96px;
+  height: 96px;
+}
+
+/* Graf over de sidste 7 dage */
+.graf {
+  width: 100%;
+  height: auto;
+  margin-top: 0.5rem;
+}
+
+.graf text {
+  font-family: system-ui, sans-serif;
+  fill: var(--tekst-svag);
+}
+
+.svarliste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svarliste li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--kant);
+}
+
+.svarliste li:last-child {
+  border-bottom: none;
+}
+
 /* Knapper */
 .knap {
   display: block;
@@ -288,6 +433,12 @@ a {
   min-height: 4rem;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.knap-sekundaer {
+  background: var(--flade);
+  color: var(--tekst);
+  border: 2px solid var(--kant);
 }
 
 .knap-advarsel {

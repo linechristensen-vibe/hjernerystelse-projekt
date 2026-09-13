@@ -39,7 +39,8 @@
         </svg>
       </div>
 
-      <button class="knap knap-stor">Udfyld dagens log</button>
+      <button class="knap knap-stor" id="idag-log-knap">Udfyld dagens log</button>
+      <p class="log-udfyldt" id="idag-log-status" hidden>Dagens log er udfyldt</p>
 
       <div class="kort kort-groen">
         <h2>Dagens råd</h2>
@@ -53,8 +54,69 @@
 
     <!-- LOG -->
     <section class="side" id="side-log" hidden>
-      <h1>Log</h1>
-      <p class="hjaelp">Her kommer din daglige symptomlog.</p>
+
+      <!-- Oversigt: det man ser, når man ikke er i gang med at udfylde -->
+      <div class="side-del" id="log-oversigt">
+        <h1>Log</h1>
+        <p class="hjaelp" id="log-status">Du har ikke udfyldt loggen i dag.</p>
+        <button class="knap knap-stor" id="log-start">Udfyld dagens log</button>
+
+        <div class="kort kort-blaa">
+          <h2>De sidste 7 dage</h2>
+          <p class="hjaelp">Dit samlede symptomniveau. Lavere er bedre.</p>
+          <svg class="graf" id="log-graf" viewBox="0 0 320 150" aria-label="Symptomniveau de sidste 7 dage"></svg>
+        </div>
+
+        <div class="kort" id="log-seneste" hidden>
+          <h2>Dagens svar</h2>
+          <ul class="svarliste" id="log-svarliste"></ul>
+        </div>
+      </div>
+
+      <!-- Skema: ét spørgsmål ad gangen -->
+      <div class="side-del" id="log-skema" hidden>
+        <p class="taeller" id="log-taeller">1 af 11</p>
+        <h1 id="log-spoergsmaal"></h1>
+        <div class="svar" id="log-svar"></div>
+
+        <div id="log-medicin" hidden>
+          <p class="hjaelp">Kun medicin, du tager på grund af hjernerystelsen.</p>
+          <div class="medicin-raekke">
+            <span>Panodil <small>(paracetamol)</small></span>
+            <div class="taeller-knapper">
+              <button type="button" class="tael-knap" data-medicin="panodil" data-retning="-1" aria-label="Færre Panodil">−</button>
+              <span class="tael-tal" id="tal-panodil">0</span>
+              <button type="button" class="tael-knap" data-medicin="panodil" data-retning="1" aria-label="Flere Panodil">+</button>
+            </div>
+          </div>
+          <div class="medicin-raekke">
+            <span>Ipren <small>(ibuprofen)</small></span>
+            <div class="taeller-knapper">
+              <button type="button" class="tael-knap" data-medicin="ipren" data-retning="-1" aria-label="Færre Ipren">−</button>
+              <span class="tael-tal" id="tal-ipren">0</span>
+              <button type="button" class="tael-knap" data-medicin="ipren" data-retning="1" aria-label="Flere Ipren">+</button>
+            </div>
+          </div>
+          <button type="button" class="valg-knap valg-bred" id="vanlig-medicin">Jeg har taget min vanlige medicin</button>
+        </div>
+
+        <div class="skema-knapper">
+          <button type="button" class="knap knap-sekundaer" id="log-tilbage">Tilbage</button>
+          <button type="button" class="knap" id="log-faerdig">Færdig</button>
+        </div>
+      </div>
+
+      <!-- Kvittering efter gem -->
+      <div class="side-del kvittering-side" id="log-kvittering" hidden>
+        <svg viewBox="0 0 80 80" class="kvittering-ikon" aria-hidden="true">
+          <circle cx="40" cy="40" r="38" fill="#e3ede6"/>
+          <path d="M24 42l11 11 21-24" fill="none" stroke="#4a7565" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Gemt. Godt gået.</h1>
+        <p class="hjaelp" id="log-tid"></p>
+        <button type="button" class="knap" id="log-luk">Til oversigten</button>
+      </div>
+
     </section>
 
     <!-- VIDEN -->

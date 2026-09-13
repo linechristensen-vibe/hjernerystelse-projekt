@@ -48,12 +48,17 @@ for hjernerystelse (2021).
 * **I dag** (forsiden): "Dag X efter din hjernerystelse" (regnet fra profilens dato),
   én stor knap "Udfyld dagens log", et kort råd der passer til fasen (første 48 timer,
   første måned, derefter), og en altid synlig knap "Hvornår skal jeg søge læge?".
-* **Log** (symptomlog): bygger på RPQ (Rivermead, 16 symptomer, skala 0 til 4 med faste
-  knapper: slet ikke, lidt, moderat, meget, rigtig meget). Ingen sliders, ingen fritekst.
-  Parametre: hovedpine, svimmelhed, kvalme, træthed/energi, søvn, nakkesmerter,
-  koncentration, lysfølsomhed, støjfølsomhed, fysisk aktivitet. Én daglig udfyldning,
-  mulighed for flere. Medicin kun hjernerystelsesrelateret (Panodil, Ipren osv. med
-  antal) plus én knap "vanlig medicin taget". Data gemmes i browseren (localStorage).
+* **Log** (symptomlog, bygget): 11 trin, ét spørgsmål per skærm. Otte symptomer på
+  RPQ-skalaen 0 til 4 (slet ikke, lidt, moderat, meget, rigtig meget): hovedpine,
+  svimmelhed, kvalme, træthed, nakkesmerter, koncentration, lysfølsomhed, støjfølsomhed.
+  Derefter søvn (rigtig dårligt til rigtig godt) og bevægelse (slet ikke til rigtig
+  meget), som ikke tæller med i symptomniveauet. Til sidst medicin: Panodil og Ipren
+  med antal, plus knappen "Jeg har taget min vanlige medicin". Ingen "andet"-felt.
+  "Færdig" gemmer når som helst, man behøver ikke svare på alt. Flere udfyldninger om
+  dagen er tilladt, oversigten bruger den seneste. Symptomniveau = sum af de otte
+  symptomer (0 til 32). Kvitteringen viser, hvor mange sekunder det tog. Oversigten
+  har en 7-dages søjlegraf (én farve, kun dagens tal skrevet på, prik for tomme dage)
+  og "Dagens svar". Gemmes i localStorage under "hovedro-log".
   Senere: knap "Udfyld med eksempeldata" til eksamen.
 * **Viden** ("coachen"): Ingen AI. Chatfelt hvor appen matcher nøgleord og synonymer
   mod gruppens egne danske artikler og viser artiklen som svar. Intet match giver et
@@ -66,8 +71,13 @@ for hjernerystelse (2021).
   aktivitet, Balance og svimmelhed, Øjne og samsyn, Hukommelse og koncentration, Ro og
   åndedræt. Senere bygges ét spil rigtigt, de fire andre forbliver pladsholdere. Byg
   ingen spil, før Line beder om det.
-* **Profil:** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej) og dato.
-  Gemmes i browseren. Mørk tilstand som valg her.
+* **Profil (bygget):** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej)
+  og dato. Gemmes i localStorage under "hovedro-profil". Mørk tilstand kommer her
+  senere, når resten af appen er på plads.
+
+**Fælde:** `hidden` virker ikke på elementer med egne display-regler. Derfor står
+`[hidden] { display: none !important; }` øverst i style.css. Lav aldrig display-regler,
+der omgår det.
 
 **Udseende og UX-principper** (fra research, se kilderne i appen):
 * Dæmpet lys baggrund (aldrig rent hvid), skrift mindst 18 px, ingen animationer.
@@ -90,7 +100,8 @@ for hjernerystelse (2021).
   billedfiler udefra. Line beslutter senere, om hun vil lave figur-illustrationer med et
   AI-billedværktøj. Appen er et sideprojekt, hold tidsforbruget nede.
 
-**Rækkefølge for bygning:** 1. Skal, 2. Profil, 3. Log, 4. Viden, 5. Træning.
+**Rækkefølge for bygning:** 1. Skal (færdig), 2. Profil (færdig), 3. Log (færdig),
+4. Viden, 5. Træning.
 
 ## Sådan arbejder Line
 
