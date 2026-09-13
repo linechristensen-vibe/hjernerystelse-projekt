@@ -1,0 +1,11 @@
+# Systemfiler
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor-mapper
+.vscode/
+.idea/
+
+# Claude Code lokale indstillinger
+.claude/settings.local.json

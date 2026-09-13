@@ -1,0 +1,15 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 40rem;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  color: #222;
+  background: #fafafa;
+}
+
+#status {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+}
