@@ -533,11 +533,17 @@ a {
   border-bottom: none;
 }
 
-/* Viden: chat */
+/* Viden: chat i et vindue med fast højde, der scroller indeni */
 .chat {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  max-height: 45vh;
+  min-height: 8rem;
+  overflow-y: auto;
+  padding: 0.75rem;
+  background: var(--blaa);
+  border-radius: 16px;
 }
 
 .besked {
@@ -558,7 +564,6 @@ a {
 .besked-app {
   align-self: flex-start;
   background: var(--flade);
-  border: 1px solid var(--kant);
   border-bottom-left-radius: 4px;
 }
 
@@ -566,6 +571,10 @@ a {
   align-self: flex-end;
   background: var(--groen);
   border-bottom-right-radius: 4px;
+}
+
+.besked {
+  flex-shrink: 0;
 }
 
 .besked h3 {

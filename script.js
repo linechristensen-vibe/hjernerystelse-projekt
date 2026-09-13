@@ -660,7 +660,9 @@ chatForm.addEventListener("submit", function (hændelse) {
   } else {
     tilfoejBesked("<p>Det har jeg ikke noget om. Prøv et af emnerne herunder, eller spørg din læge.</p>");
   }
-  chatTraad.lastElementChild.scrollIntoView({ block: "nearest" });
+  // Rul chatvinduet ned til spørgsmålet, så man ser svarets begyndelse
+  var sidsteSpoergsmaal = chatTraad.querySelectorAll(".besked-bruger");
+  chatTraad.scrollTop = sidsteSpoergsmaal[sidsteSpoergsmaal.length - 1].offsetTop - chatTraad.offsetTop - 12;
 });
 
 tilfoejBesked("<p>Hej. Spørg mig om hjernerystelse, eller vælg et emne herunder.</p>");
