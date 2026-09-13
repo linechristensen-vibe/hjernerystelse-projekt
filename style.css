@@ -798,6 +798,84 @@ a {
   font-size: 1.3rem;
 }
 
+/* Træning: hvorfor-tekst, niveauer og milepæle */
+.hvorfor {
+  padding: 1rem;
+  background: var(--groen);
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.hvorfor p:last-child {
+  margin-bottom: 0;
+}
+
+.valg-knap:disabled {
+  color: var(--tekst-svag);
+  background: transparent;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.milepael-nyhed {
+  padding: 0.75rem 1rem;
+  background: var(--groen);
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--primaer);
+}
+
+.milepaele {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.milepaele li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--kant);
+  color: var(--tekst-svag);
+}
+
+.milepaele li:last-child {
+  border-bottom: none;
+}
+
+.milepaele li.naaet {
+  color: var(--tekst);
+}
+
+.milepaele .prik-tegn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--kant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primaer);
+}
+
+.milepaele li.naaet .prik-tegn {
+  background: var(--groen);
+  border-color: var(--groen);
+}
+
+.milepaele .prik-tegn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.milepaele small {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--tekst-svag);
+}
+
 /* Træning: Følg prikken */
 .demo-maerke {
   display: inline-block;

@@ -93,9 +93,14 @@ for hjernerystelse (2021).
   24 eller over (af 48), tæller som planlagt pause og viser kortet "I dag: tag det
   roligt". Kortet "Din udvikling": bedste reaktionstid, bedste træfsikkerhed, antal
   træninger, og kurve over reaktionstiden de seneste 10 gange. Kun mod sig selv.
-  Næste skridt (ikke bygget): niveauer i Følg prikken, der låses op ved 80 % to gange,
-  få stille milepæle ("10 træninger", "første fulde uge"), og to linjer "hvad træner
-  det og hvorfor" under hver øvelse.
+  **Niveauer** i Følg prikken: tre (NIVEAUER i script.js: fart og vindue), næste
+  låses op efter 80 % træffere to gange på niveauet før. Valg på introskærmen, låste
+  vises grå med forklaring. Resultatet gemmer niveau. **Milepæle** (MILEPAELE i
+  script.js): Første træning, 5, 10, 25 træninger, Første fulde uge (huskes under
+  "hovedro-fuld-uge"), Niveau 2 og 3 låst op. Vises som lukket fold-ud-liste på
+  Træning, og som én rolig linje på resultatskærmen, når noget nyt er nået. Ingen
+  pokaler, ingen konfetti. **Hvorfor-tekst** ("Hvad træner det / Hvorfor") står på
+  introskærmen til Følg prikken. De fire pladsholdere får det, når de bygges.
 * **Profil (bygget):** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej)
   og dato. Gemmes i localStorage under "hovedro-profil". Mørk tilstand kommer her
   senere, når resten af appen er på plads.

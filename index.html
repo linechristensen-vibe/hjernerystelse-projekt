@@ -290,6 +290,11 @@
         <p class="hjaelp" id="udvikling-tekst">Reaktionstid de seneste træninger. Lavere er bedre.</p>
         <svg class="graf" id="traening-graf" viewBox="0 0 320 120" aria-label="Reaktionstid de seneste træninger"></svg>
       </div>
+
+      <details class="kort fold">
+        <summary><h2>Milepæle</h2></summary>
+        <ul class="milepaele" id="milepaele"></ul>
+      </details>
       </div>
 
       <!-- Spil: Følg prikken -->
@@ -304,6 +309,18 @@
             <li>Tryk på feltet, når prikken bliver mørk.</li>
             <li>Det tager 30 sekunder. Stop, hvis du får det dårligt.</li>
           </ul>
+
+          <div class="hvorfor">
+            <p><strong>Hvad træner det:</strong> øjnenes evne til at følge en bevægelse jævnt uden at hovedet følger med.</p>
+            <p><strong>Hvorfor:</strong> efter en hjernerystelse arbejder øjne og balance ofte dårligere sammen. Rolig gentagelse hjælper dem med at finde hinanden igen.</p>
+          </div>
+
+          <div class="felt">
+            <span>Niveau</span>
+            <div class="valg" id="niveau-valg"></div>
+            <p class="hjaelp" id="niveau-tekst"></p>
+          </div>
+
           <button type="button" class="knap knap-stor" id="prik-start">Start</button>
         </div>
 
@@ -322,6 +339,7 @@
           <h1>Godt gået</h1>
           <p id="prik-score"></p>
           <p class="hjaelp" id="prik-reaktion"></p>
+          <p class="milepael-nyhed" id="prik-nyhed" hidden></p>
           <button type="button" class="knap" id="prik-igen">Prøv igen</button>
         </div>
       </div>

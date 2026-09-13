@@ -708,11 +708,56 @@ document.getElementById("idag-laege").addEventListener("click", function () {
 // kort øjeblik, og brugeren skal trykke. Vi tæller træffere og reaktionstid.
 var TRAENING_NOEGLE = "hovedro-traening";
 var PRIK_VARIGHED = 30000;   // millisekunder
-var PRIK_VINDUE = 1500;      // hvor længe prikken er mørk
+
+// Tre niveauer: prikken bliver hurtigere, og det mørke vindue kortere.
+// Næste niveau låses op, når man har fanget mindst 80 % to gange på niveauet før.
+var NIVEAUER = [
+  { fartX: 1400, fartY: 3100, vindue: 1500, tekst: "Rolig prik, god tid til at trykke." },
+  { fartX: 1000, fartY: 2300, vindue: 1100, tekst: "Hurtigere prik, kortere tid." },
+  { fartX: 750,  fartY: 1700, vindue: 800,  tekst: "Hurtig prik, kort tid." }
+];
+var LAAS_OP_ANDEL = 0.8;
+var LAAS_OP_ANTAL = 2;
 
 var prikFelt = document.getElementById("prik-felt");
 var prik = document.getElementById("prik");
 var prikSpil = null;         // tilstand for det igangværende spil
+var valgtNiveau = 0;
+
+// Højeste niveau (0-baseret), der er låst op, ud fra historikken
+function hoejesteNiveau() {
+  var liste = hentTraening().filter(function (t) { return t.spil === "prik"; });
+  var niveau = 0;
+  while (niveau < NIVEAUER.length - 1) {
+    var gode = liste.filter(function (t) {
+      return (t.niveau || 0) === niveau && t.antal && t.traeffere / t.antal >= LAAS_OP_ANDEL;
+    }).length;
+    if (gode < LAAS_OP_ANTAL) break;
+    niveau++;
+  }
+  return niveau;
+}
+
+function visNiveauValg() {
+  var aabent = hoejesteNiveau();
+  if (valgtNiveau > aabent) valgtNiveau = aabent;
+  document.getElementById("niveau-valg").innerHTML = NIVEAUER.map(function (n, i) {
+    return '<button type="button" class="valg-knap' + (i === valgtNiveau ? ' valgt' : '') + '" data-niveau="' + i + '"' +
+      (i > aabent ? ' disabled' : '') + '>' + (i + 1) + '</button>';
+  }).join("");
+  var tekst = NIVEAUER[valgtNiveau].tekst;
+  if (aabent < NIVEAUER.length - 1) {
+    tekst += " Niveau " + (aabent + 2) + " låses op, når du fanger 80 % to gange på niveau " + (aabent + 1) + ".";
+  }
+  document.getElementById("niveau-tekst").textContent = tekst;
+}
+
+document.getElementById("niveau-valg").addEventListener("click", function (hændelse) {
+  var knap = hændelse.target.closest(".valg-knap");
+  if (!knap || knap.disabled) return;
+  valgtNiveau = Number(knap.dataset.niveau);
+  visNiveauValg();
+});
 
 function hentTraening() {
   try {
@@ -733,6 +778,8 @@ function aabnPrik() {
   visSide("traening");
   document.getElementById("traening-oversigt").hidden = true;
   document.getElementById("spil-prik").hidden = false;
+  valgtNiveau = hoejesteNiveau();
+  visNiveauValg();
   visSpilDel("intro");
 }
 
@@ -744,10 +791,10 @@ function lukPrik() {
 }
 
 // Planlæg de tidspunkter, hvor prikken bliver mørk: hvert 4. til 6. sekund
-function planlaegSkift() {
+function planlaegSkift(vindue) {
   var tider = [];
   var t = 3000 + Math.random() * 2000;
-  while (t < PRIK_VARIGHED - PRIK_VINDUE) {
+  while (t < PRIK_VARIGHED - vindue) {
     tider.push(t);
     t += 4000 + Math.random() * 2000;
   }
@@ -755,9 +802,12 @@ function planlaegSkift() {
 }
 
 function startPrik() {
+  var n = NIVEAUER[valgtNiveau];
   prikSpil = {
+    niveau: valgtNiveau,
+    indstilling: n,
     start: performance.now(),
-    skift: planlaegSkift(),
+    skift: planlaegSkift(n.vindue),
     aktivtSkift: null,     // starttidspunkt for det skift, der er mørkt lige nu
     traeffere: 0,
     reaktioner: [],
@@ -770,20 +820,21 @@ function startPrik() {
 function tegnPrik(nu) {
   if (!prikSpil) return;
   var tid = nu - prikSpil.start;
+  var n = prikSpil.indstilling;
 
   if (tid >= PRIK_VARIGHED) {
     afslutPrik();
     return;
   }
 
-  // Banen: langsom sidelæns bølge og en endnu langsommere op-og-ned bevægelse
+  // Banen: sidelæns bølge og en langsommere op-og-ned bevægelse. Farten afhænger af niveauet.
   var b = prikFelt.clientWidth, h = prikFelt.clientHeight;
-  var x = b / 2 + (b / 2 - 30) * Math.sin(tid / 1400);
-  var y = h / 2 + (h / 2 - 30) * Math.sin(tid / 3100);
+  var x = b / 2 + (b / 2 - 30) * Math.sin(tid / n.fartX);
+  var y = h / 2 + (h / 2 - 30) * Math.sin(tid / n.fartY);
   prik.style.transform = "translate(" + x + "px, " + y + "px)";
 
   // Er vi inde i et mørkt vindue?
-  var skift = prikSpil.skift.find(function (s) { return tid >= s && tid < s + PRIK_VINDUE; });
+  var skift = prikSpil.skift.find(function (s) { return tid >= s && tid < s + n.vindue; });
   prik.classList.toggle("moerk", !!skift);
   prikSpil.aktivtSkift = skift || null;
 
@@ -813,8 +864,12 @@ function afslutPrik() {
     ? prikSpil.reaktioner.reduce(function (s, r) { return s + r.tid; }, 0) / prikSpil.reaktioner.length
     : null;
 
+  var niveauFoer = hoejesteNiveau();
+  var milepaeleFoer = naaedeMilepaele();
+
   var resultat = {
     spil: "prik",
+    niveau: prikSpil.niveau,
     dato: datoNoegle(),
     tidspunkt: new Date().toISOString(),
     varighed: PRIK_VARIGHED / 1000,
@@ -827,12 +882,54 @@ function afslutPrik() {
   localStorage.setItem(TRAENING_NOEGLE, JSON.stringify(liste));
 
   stopPrik();
-  document.getElementById("prik-score").textContent = "Du fangede " + traeffere + " af " + antal + " farveskift.";
+  document.getElementById("prik-score").textContent = "Du fangede " + traeffere + " af " + antal + " farveskift på niveau " + (resultat.niveau + 1) + ".";
   document.getElementById("prik-reaktion").textContent = snit === null
     ? "Ingen reaktionstid målt."
     : "Gennemsnitlig reaktionstid: " + (snit / 1000).toFixed(1).replace(".", ",") + " sekunder.";
+
+  // Én rolig linje, hvis noget nyt er nået: et niveau eller en milepæl
+  var nyheder = [];
+  if (hoejesteNiveau() > niveauFoer) nyheder.push("Niveau " + (hoejesteNiveau() + 1) + " er låst op.");
+  naaedeMilepaele().forEach(function (m) {
+    if (milepaeleFoer.indexOf(m) === -1) nyheder.push("Milepæl: " + findMilepael(m).titel + ".");
+  });
+  var nyhed = document.getElementById("prik-nyhed");
+  nyhed.hidden = nyheder.length === 0;
+  nyhed.textContent = nyheder.join(" ");
+
   visSpilDel("resultat");
   opdaterTraeningOversigt();
+}
+
+// ---------- Milepæle ----------
+// Få og stille. Regnes ud fra data hver gang, intet gemmes separat, bortset fra
+// "første fulde uge", som huskes, fordi ugen nulstilles hver mandag.
+var MILEPAELE = [
+  { id: "foerste",   titel: "Første træning",     test: function (t) { return t.length >= 1; } },
+  { id: "fem",       titel: "5 træninger",        test: function (t) { return t.length >= 5; } },
+  { id: "ti",        titel: "10 træninger",       test: function (t) { return t.length >= 10; } },
+  { id: "femogtyve", titel: "25 træninger",       test: function (t) { return t.length >= 25; } },
+  { id: "uge",       titel: "Første fulde uge",   test: function () { return localStorage.getItem("hovedro-fuld-uge") === "ja"; } },
+  { id: "niveau2",   titel: "Niveau 2 låst op",   test: function () { return hoejesteNiveau() >= 1; } },
+  { id: "niveau3",   titel: "Niveau 3 låst op",   test: function () { return hoejesteNiveau() >= 2; } }
+];
+
+function findMilepael(id) {
+  return MILEPAELE.find(function (m) { return m.id === id; });
+}
+
+function naaedeMilepaele() {
+  var t = hentTraening();
+  return MILEPAELE.filter(function (m) { return m.test(t); }).map(function (m) { return m.id; });
+}
+
+function visMilepaele() {
+  var naaet = naaedeMilepaele();
+  var flueben = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  document.getElementById("milepaele").innerHTML = MILEPAELE.map(function (m) {
+    var erNaaet = naaet.indexOf(m.id) !== -1;
+    return '<li class="' + (erNaaet ? 'naaet' : '') + '"><span class="prik-tegn">' + (erNaaet ? flueben : '') + '</span>' + m.titel + '</li>';
+  }).join("");
 }
 
 // ---------- Træningslog, ugemål og udvikling ----------
@@ -888,6 +985,7 @@ function opdaterTraeningOversigt() {
   var status = document.getElementById("traening-ugestatus");
   if (talt >= maal) {
     status.textContent = "Ugemålet er nået. Flot.";
+    localStorage.setItem("hovedro-fuld-uge", "ja");
   } else {
     status.textContent = talt + " af " + maal + " denne uge";
   }
@@ -902,6 +1000,7 @@ function opdaterTraeningOversigt() {
   document.getElementById("traening-pause").hidden = !(idag && idag.pause);
 
   visUdvikling();
+  visMilepaele();
 }
 
 document.getElementById("ugemaal-valg").addEventListener("click", function (hændelse) {
