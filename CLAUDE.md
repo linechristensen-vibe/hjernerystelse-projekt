@@ -34,6 +34,9 @@ giver feedback, de rører ikke filerne.
 
 ### Hvad appen er
 
+Appen hedder **Hovedro** (foreløbigt, gruppen kan omdøbe den senere). Fravalgt:
+Bedring, Pusterum, Klar, Tempo, og alt med "hjerne" i.
+
 En dansk app til voksne (over 18) med hjernerystelse. Der mangler strukturerede forløb
 i Danmark, og folk googler sig til svar. Appen samler evidensbaseret viden, en nem
 symptomlog og træning ét sted. Det adskiller den fra DCFH's app "Hjernerystelse – din
