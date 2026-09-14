@@ -107,6 +107,12 @@ for hjernerystelse (2021).
 * **Profil (bygget):** navn, alder, dato for hjernerystelsen, været til lægen (ja/nej)
   og dato. Gemmes i localStorage under "hovedro-profil". Mørk tilstand kommer her
   senere, når resten af appen er på plads.
+* **Del app (bygget 14. september 2026):** knappen "Del app" i toplinjen ved siden af
+  profil-ikonet. Åbner en skærm, der fylder hele telefonen: kryds øverst til højre,
+  QR-kode til GitHub Pages-adressen, adressen som tekst og "Kopiér link" (kvitterer
+  "Link kopieret"). QR-koden er ikke et billede: mønstret ligger som 33 tekstlinjer i
+  QR_FELTER i script.js og tegnes som SVG. Mønstret er regnet ud og testet mod en
+  QR-læser. Ændres adressen, skal mønstret regnes om (bed Claude om det).
 
 **Fælde:** `hidden` virker ikke på elementer med egne display-regler. Derfor står
 `[hidden] { display: none !important; }` øverst i style.css. Lav aldrig display-regler,

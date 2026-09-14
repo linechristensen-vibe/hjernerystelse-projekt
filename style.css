@@ -93,6 +93,25 @@ a {
   font-size: 1.15rem;
 }
 
+.topbar-knapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.del-knap {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--tekst);
+  background: var(--groen);
+  border: 1px solid var(--kant);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
 .profil-knap {
   display: flex;
   align-items: center;
@@ -103,6 +122,60 @@ a {
   border: none;
   color: var(--tekst);
   cursor: pointer;
+}
+
+/* Del app: hel skærm oven på alt andet */
+.del-skaerm {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 1.5rem 2rem;
+  text-align: center;
+  background: var(--baggrund);
+  overflow-y: auto;
+}
+
+.del-skaerm h1,
+.del-skaerm p {
+  margin: 0;
+}
+
+.del-luk {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 48px;
+  background: none;
+  border: none;
+  color: var(--tekst);
+  cursor: pointer;
+}
+
+.del-qr {
+  width: min(80vw, 300px);
+  height: auto;
+  border-radius: 12px;
+}
+
+.del-adresse {
+  color: var(--tekst-svag);
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+
+.del-skaerm .del-kopier {
+  width: auto;
+  min-width: 12rem;
+  margin-top: 0.5rem;
 }
 
 /* Sider */

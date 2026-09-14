@@ -20,6 +20,90 @@ document.getElementById("profil-knap").addEventListener("click", function () {
   visSide("profil");
 });
 
+// ---------- Del app ----------
+// QR-koden peger på appens adresse på GitHub Pages. Mønstret (33 x 33 felter,
+// 1 = mørkt felt) er regnet ud én gang og tegnes som SVG. Hvis adressen ændres,
+// skal mønstret regnes om.
+var APP_ADRESSE = "https://linechristensen-vibe.github.io/hjernerystelse-projekt/";
+var QR_FELTER = [
+  "111111100101101100110011001111111",
+  "100000100101101111101101101000001",
+  "101110100010100101010000101011101",
+  "101110100101000010010011001011101",
+  "101110100111011110100111001011101",
+  "100000101110100110110100001000001",
+  "111111101010101010101010101111111",
+  "000000000110101011110110100000000",
+  "100101101000111110001100110100000",
+  "110011011111100000001110111100001",
+  "001110100000100010011100000110101",
+  "001101001001110110100100100011011",
+  "011000100011101011010100111001000",
+  "101011000001110000111100101110011",
+  "101000101101100000000111111100110",
+  "101000011010100111011100001010010",
+  "100001111100111001101110101010010",
+  "100101010011011010000001110101010",
+  "010110110111001010100010100000111",
+  "001011010001011011001100100100000",
+  "011000110010011010000100010000010",
+  "010010001000001010101010111001011",
+  "111010111101011000010000000100001",
+  "011100000100111000110110111110010",
+  "101101111100000111001100111110010",
+  "000000001011010001111101100011011",
+  "111111100000010000100110101011110",
+  "100000101100000101011110100010000",
+  "101110100100001101011110111111010",
+  "101110101010000010000111001011100",
+  "101110100010101001001110000010001",
+  "100000100101100001001101101000000",
+  "111111101011100110001100101011010"
+];
+
+function tegnQr() {
+  var svg = document.getElementById("del-qr");
+  var luft = 4; // lys kant hele vejen rundt, ellers kan kameraet ikke finde koden
+  var n = QR_FELTER.length;
+  var side = n + 2 * luft;
+  svg.setAttribute("viewBox", "0 0 " + side + " " + side);
+  var dele = ['<rect width="' + side + '" height="' + side + '" fill="#ffffff"/>'];
+  QR_FELTER.forEach(function (raekke, r) {
+    for (var c = 0; c < n; c++) {
+      if (raekke[c] === "1") {
+        dele.push('<rect x="' + (c + luft) + '" y="' + (r + luft) + '" width="1" height="1" fill="#111111"/>');
+      }
+    }
+  });
+  svg.innerHTML = dele.join("");
+}
+
+var delSkaerm = document.getElementById("del-skaerm");
+var delKopier = document.getElementById("del-kopier");
+
+document.getElementById("del-knap").addEventListener("click", function () {
+  if (!delSkaerm.dataset.tegnet) {
+    tegnQr();
+    delSkaerm.dataset.tegnet = "ja";
+  }
+  delSkaerm.hidden = false;
+});
+
+document.getElementById("del-luk").addEventListener("click", function () {
+  delSkaerm.hidden = true;
+});
+
+delKopier.addEventListener("click", function () {
+  navigator.clipboard.writeText(APP_ADRESSE).then(function () {
+    delKopier.textContent = "Link kopieret";
+  }, function () {
+    delKopier.textContent = "Kunne ikke kopiere";
+  });
+  setTimeout(function () {
+    delKopier.textContent = "Kopiér link";
+  }, 2500);
+});
+
 // ---------- Profil ----------
 // Profilen gemmes i browseren på telefonen. Intet sendes nogen steder hen.
 var PROFIL_NOEGLE = "hovedro-profil";
