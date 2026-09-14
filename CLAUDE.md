@@ -210,6 +210,13 @@ Kort, én til to linjer per beslutning.
 Punkter, der skal afklares med Line, og som du skal huske at tage op, når de bliver
 relevante. Slet et punkt herfra, når det er afgjort, og skriv beslutningen ovenfor.
 
+* **Wireframe-visning med historik** (Lines ønske 14. september 2026): en visning af
+  appens skærme som wireframes over tid, så underviseren kan se processen gennem
+  semesteret. Ikke afklaret endnu. Første spørgsmål stillet i NÆSTE-SKRIDT.md: skal
+  det være en separat side (proces.html) med én række wireframes per version? Slet
+  NÆSTE-SKRIDT.md, når Line har svaret.
+* Line arbejder også fra en bærbar i skolen (samme GitHub-repo). Derfor altid commit
+  og push efter hver godkendt ændring, og hent (git pull) i starten af hver session.
 * Hvilket ét af de fem træningsspil der bygges rigtigt (kræver research først).
 * "Ugens tjek": det fulde RPQ (16 spørgsmål, om de sidste 7 dage, officiel ordlyd og
   score) som en separat ugentlig udfyldning ved siden af den daglige log. Line og jeg
